@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.CertificatemanageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Certificatemanage" >
+    <id column="CertificateId" property="certificateId" jdbcType="INTEGER" />
+    <result column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="CertificateType" property="certificateType" jdbcType="TINYINT" />
+    <result column="CertificateNum" property="certificateNum" jdbcType="VARCHAR" />
+    <result column="CertificateName" property="certificateName" jdbcType="VARCHAR" />
+    <result column="CertificateLevel" property="certificateLevel" jdbcType="TINYINT" />
+    <result column="ReviewIstitution" property="reviewIstitution" jdbcType="VARCHAR" />
+    <result column="ReviewTime" property="reviewTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CertificateId, TeacherId, CertificateType, CertificateNum, CertificateName, CertificateLevel, 
+    ReviewIstitution, ReviewTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.CertificatemanageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from certificatemanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from certificatemanage
+    where CertificateId = #{certificateId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from certificatemanage
+    where CertificateId = #{certificateId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.CertificatemanageExample" >
+    delete from certificatemanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Certificatemanage" >
+    insert into certificatemanage (CertificateId, TeacherId, CertificateType, 
+      CertificateNum, CertificateName, CertificateLevel, 
+      ReviewIstitution, ReviewTime)
+    values (#{certificateId,jdbcType=INTEGER}, #{teacherId,jdbcType=CHAR}, #{certificateType,jdbcType=TINYINT}, 
+      #{certificateNum,jdbcType=VARCHAR}, #{certificateName,jdbcType=VARCHAR}, #{certificateLevel,jdbcType=TINYINT}, 
+      #{reviewIstitution,jdbcType=VARCHAR}, #{reviewTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Certificatemanage" >
+    insert into certificatemanage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="certificateId != null" >
+        CertificateId,
+      </if>
+      <if test="teacherId != null" >
+        TeacherId,
+      </if>
+      <if test="certificateType != null" >
+        CertificateType,
+      </if>
+      <if test="certificateNum != null" >
+        CertificateNum,
+      </if>
+      <if test="certificateName != null" >
+        CertificateName,
+      </if>
+      <if test="certificateLevel != null" >
+        CertificateLevel,
+      </if>
+      <if test="reviewIstitution != null" >
+        ReviewIstitution,
+      </if>
+      <if test="reviewTime != null" >
+        ReviewTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="certificateId != null" >
+        #{certificateId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="certificateType != null" >
+        #{certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="certificateNum != null" >
+        #{certificateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateName != null" >
+        #{certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevel != null" >
+        #{certificateLevel,jdbcType=TINYINT},
+      </if>
+      <if test="reviewIstitution != null" >
+        #{reviewIstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTime != null" >
+        #{reviewTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.CertificatemanageExample" resultType="java.lang.Integer" >
+    select count(*) from certificatemanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update certificatemanage
+    <set >
+      <if test="record.certificateId != null" >
+        CertificateId = #{record.certificateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        TeacherId = #{record.teacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.certificateType != null" >
+        CertificateType = #{record.certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="record.certificateNum != null" >
+        CertificateNum = #{record.certificateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateName != null" >
+        CertificateName = #{record.certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.certificateLevel != null" >
+        CertificateLevel = #{record.certificateLevel,jdbcType=TINYINT},
+      </if>
+      <if test="record.reviewIstitution != null" >
+        ReviewIstitution = #{record.reviewIstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewTime != null" >
+        ReviewTime = #{record.reviewTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update certificatemanage
+    set CertificateId = #{record.certificateId,jdbcType=INTEGER},
+      TeacherId = #{record.teacherId,jdbcType=CHAR},
+      CertificateType = #{record.certificateType,jdbcType=TINYINT},
+      CertificateNum = #{record.certificateNum,jdbcType=VARCHAR},
+      CertificateName = #{record.certificateName,jdbcType=VARCHAR},
+      CertificateLevel = #{record.certificateLevel,jdbcType=TINYINT},
+      ReviewIstitution = #{record.reviewIstitution,jdbcType=VARCHAR},
+      ReviewTime = #{record.reviewTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Certificatemanage" >
+    update certificatemanage
+    <set >
+      <if test="teacherId != null" >
+        TeacherId = #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="certificateType != null" >
+        CertificateType = #{certificateType,jdbcType=TINYINT},
+      </if>
+      <if test="certificateNum != null" >
+        CertificateNum = #{certificateNum,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateName != null" >
+        CertificateName = #{certificateName,jdbcType=VARCHAR},
+      </if>
+      <if test="certificateLevel != null" >
+        CertificateLevel = #{certificateLevel,jdbcType=TINYINT},
+      </if>
+      <if test="reviewIstitution != null" >
+        ReviewIstitution = #{reviewIstitution,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewTime != null" >
+        ReviewTime = #{reviewTime,jdbcType=DATE},
+      </if>
+    </set>
+    where CertificateId = #{certificateId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Certificatemanage" >
+    update certificatemanage
+    set TeacherId = #{teacherId,jdbcType=CHAR},
+      CertificateType = #{certificateType,jdbcType=TINYINT},
+      CertificateNum = #{certificateNum,jdbcType=VARCHAR},
+      CertificateName = #{certificateName,jdbcType=VARCHAR},
+      CertificateLevel = #{certificateLevel,jdbcType=TINYINT},
+      ReviewIstitution = #{reviewIstitution,jdbcType=VARCHAR},
+      ReviewTime = #{reviewTime,jdbcType=DATE}
+    where CertificateId = #{certificateId,jdbcType=INTEGER}
+  </update>
+</mapper>

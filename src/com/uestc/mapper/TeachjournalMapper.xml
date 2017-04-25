@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.TeachjournalMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Teachjournal" >
+    <id column="TeachJournalId" property="teachJournalId" jdbcType="VARCHAR" />
+    <result column="GiveLessonsDetailsId" property="giveLessonsDetailsId" jdbcType="VARCHAR" />
+    <result column="TeacherConfirm" property="teacherConfirm" jdbcType="BIT" />
+    <result column="ExecWeek" property="execWeek" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.uestc.model.Teachjournal" extends="BaseResultMap" >
+    <result column="TeachJournalInFo" property="teachJournalInFo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TeachJournalId, GiveLessonsDetailsId, TeacherConfirm, ExecWeek
+  </sql>
+  <sql id="Blob_Column_List" >
+    TeachJournalInFo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.uestc.model.TeachjournalExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from teachjournal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.TeachjournalExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teachjournal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from teachjournal
+    where TeachJournalId = #{teachJournalId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teachjournal
+    where TeachJournalId = #{teachJournalId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.TeachjournalExample" >
+    delete from teachjournal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Teachjournal" >
+    insert into teachjournal (TeachJournalId, GiveLessonsDetailsId, 
+      TeacherConfirm, ExecWeek, TeachJournalInFo
+      )
+    values (#{teachJournalId,jdbcType=VARCHAR}, #{giveLessonsDetailsId,jdbcType=VARCHAR}, 
+      #{teacherConfirm,jdbcType=BIT}, #{execWeek,jdbcType=TINYINT}, #{teachJournalInFo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Teachjournal" >
+    insert into teachjournal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teachJournalId != null" >
+        TeachJournalId,
+      </if>
+      <if test="giveLessonsDetailsId != null" >
+        GiveLessonsDetailsId,
+      </if>
+      <if test="teacherConfirm != null" >
+        TeacherConfirm,
+      </if>
+      <if test="execWeek != null" >
+        ExecWeek,
+      </if>
+      <if test="teachJournalInFo != null" >
+        TeachJournalInFo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teachJournalId != null" >
+        #{teachJournalId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveLessonsDetailsId != null" >
+        #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherConfirm != null" >
+        #{teacherConfirm,jdbcType=BIT},
+      </if>
+      <if test="execWeek != null" >
+        #{execWeek,jdbcType=TINYINT},
+      </if>
+      <if test="teachJournalInFo != null" >
+        #{teachJournalInFo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.TeachjournalExample" resultType="java.lang.Integer" >
+    select count(*) from teachjournal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teachjournal
+    <set >
+      <if test="record.teachJournalId != null" >
+        TeachJournalId = #{record.teachJournalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveLessonsDetailsId != null" >
+        GiveLessonsDetailsId = #{record.giveLessonsDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherConfirm != null" >
+        TeacherConfirm = #{record.teacherConfirm,jdbcType=BIT},
+      </if>
+      <if test="record.execWeek != null" >
+        ExecWeek = #{record.execWeek,jdbcType=TINYINT},
+      </if>
+      <if test="record.teachJournalInFo != null" >
+        TeachJournalInFo = #{record.teachJournalInFo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update teachjournal
+    set TeachJournalId = #{record.teachJournalId,jdbcType=VARCHAR},
+      GiveLessonsDetailsId = #{record.giveLessonsDetailsId,jdbcType=VARCHAR},
+      TeacherConfirm = #{record.teacherConfirm,jdbcType=BIT},
+      ExecWeek = #{record.execWeek,jdbcType=TINYINT},
+      TeachJournalInFo = #{record.teachJournalInFo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teachjournal
+    set TeachJournalId = #{record.teachJournalId,jdbcType=VARCHAR},
+      GiveLessonsDetailsId = #{record.giveLessonsDetailsId,jdbcType=VARCHAR},
+      TeacherConfirm = #{record.teacherConfirm,jdbcType=BIT},
+      ExecWeek = #{record.execWeek,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Teachjournal" >
+    update teachjournal
+    <set >
+      <if test="giveLessonsDetailsId != null" >
+        GiveLessonsDetailsId = #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherConfirm != null" >
+        TeacherConfirm = #{teacherConfirm,jdbcType=BIT},
+      </if>
+      <if test="execWeek != null" >
+        ExecWeek = #{execWeek,jdbcType=TINYINT},
+      </if>
+      <if test="teachJournalInFo != null" >
+        TeachJournalInFo = #{teachJournalInFo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where TeachJournalId = #{teachJournalId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.uestc.model.Teachjournal" >
+    update teachjournal
+    set GiveLessonsDetailsId = #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      TeacherConfirm = #{teacherConfirm,jdbcType=BIT},
+      ExecWeek = #{execWeek,jdbcType=TINYINT},
+      TeachJournalInFo = #{teachJournalInFo,jdbcType=LONGVARCHAR}
+    where TeachJournalId = #{teachJournalId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Teachjournal" >
+    update teachjournal
+    set GiveLessonsDetailsId = #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      TeacherConfirm = #{teacherConfirm,jdbcType=BIT},
+      ExecWeek = #{execWeek,jdbcType=TINYINT}
+    where TeachJournalId = #{teachJournalId,jdbcType=VARCHAR}
+  </update>
+</mapper>

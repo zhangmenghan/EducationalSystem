@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.ClassroomManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Classroom" >
+    <id column="ClassroomId" property="classroomId" jdbcType="VARCHAR" />
+    <result column="MatchedClassId" property="matchedClassId" jdbcType="VARCHAR" />
+    <result column="Location" property="location" jdbcType="VARCHAR" />
+    <result column="ClassType" property="classType" jdbcType="TINYINT" />
+    <result column="ClassroomSize" property="classroomSize" jdbcType="INTEGER" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    ClassroomId, MatchedClassId, Location, ClassType, ClassroomSize
+  </sql>
+  
+  
+  <select id="selectAllClassroom" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classroom
+  </select>
+  <select id="selectRegularClassroom" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classroom
+    where ClassType=1
+  </select>
+  <select id="selectUnregularClassroom" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classroom
+    where ClassType=2
+  </select>
+</mapper>

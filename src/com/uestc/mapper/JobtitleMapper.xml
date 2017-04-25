@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.JobtitleMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Jobtitle" >
+    <id column="JobId" property="jobId" jdbcType="INTEGER" />
+    <result column="JobName" property="jobName" jdbcType="VARCHAR" />
+    <result column="PayPerCourse" property="payPerCourse" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    JobId, JobName, PayPerCourse
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.JobtitleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from jobtitle
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from jobtitle
+    where JobId = #{jobId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from jobtitle
+    where JobId = #{jobId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.JobtitleExample" >
+    delete from jobtitle
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Jobtitle" >
+    insert into jobtitle (JobId, JobName, PayPerCourse
+      )
+    values (#{jobId,jdbcType=INTEGER}, #{jobName,jdbcType=VARCHAR}, #{payPerCourse,jdbcType=REAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Jobtitle" >
+    insert into jobtitle
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        JobId,
+      </if>
+      <if test="jobName != null" >
+        JobName,
+      </if>
+      <if test="payPerCourse != null" >
+        PayPerCourse,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="jobId != null" >
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="jobName != null" >
+        #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="payPerCourse != null" >
+        #{payPerCourse,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.JobtitleExample" resultType="java.lang.Integer" >
+    select count(*) from jobtitle
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update jobtitle
+    <set >
+      <if test="record.jobId != null" >
+        JobId = #{record.jobId,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobName != null" >
+        JobName = #{record.jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payPerCourse != null" >
+        PayPerCourse = #{record.payPerCourse,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update jobtitle
+    set JobId = #{record.jobId,jdbcType=INTEGER},
+      JobName = #{record.jobName,jdbcType=VARCHAR},
+      PayPerCourse = #{record.payPerCourse,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Jobtitle" >
+    update jobtitle
+    <set >
+      <if test="jobName != null" >
+        JobName = #{jobName,jdbcType=VARCHAR},
+      </if>
+      <if test="payPerCourse != null" >
+        PayPerCourse = #{payPerCourse,jdbcType=REAL},
+      </if>
+    </set>
+    where JobId = #{jobId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Jobtitle" >
+    update jobtitle
+    set JobName = #{jobName,jdbcType=VARCHAR},
+      PayPerCourse = #{payPerCourse,jdbcType=REAL}
+    where JobId = #{jobId,jdbcType=INTEGER}
+  </update>
+</mapper>

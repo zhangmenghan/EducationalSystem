@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.TeachplanMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Teachplan" >
+    <id column="TeachPlanId" property="teachPlanId" jdbcType="VARCHAR" />
+    <result column="CourseId" property="courseId" jdbcType="CHAR" />
+    <result column="CourseTypeId" property="courseTypeId" jdbcType="TINYINT" />
+    <result column="GradeId" property="gradeId" jdbcType="VARCHAR" />
+    <result column="CourseName" property="courseName" jdbcType="VARCHAR" />
+    <result column="TotalHours" property="totalHours" jdbcType="SMALLINT" />
+    <result column="TheoryHours" property="theoryHours" jdbcType="SMALLINT" />
+    <result column="PracticeHours" property="practiceHours" jdbcType="SMALLINT" />
+    <result column="SchoolYearType" property="schoolYearType" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TeachPlanId, CourseId, CourseTypeId, GradeId, CourseName, TotalHours, TheoryHours, 
+    PracticeHours, SchoolYearType
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.TeachplanExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teachplan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachplan
+    where TeachPlanId = #{teachPlanId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from teachplan
+    where TeachPlanId = #{teachPlanId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.TeachplanExample" >
+    delete from teachplan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Teachplan" >
+    insert into teachplan (TeachPlanId, CourseId, CourseTypeId, 
+      GradeId, CourseName, TotalHours, 
+      TheoryHours, PracticeHours, SchoolYearType
+      )
+    values (#{teachPlanId,jdbcType=VARCHAR}, #{courseId,jdbcType=CHAR}, #{courseTypeId,jdbcType=TINYINT}, 
+      #{gradeId,jdbcType=VARCHAR}, #{courseName,jdbcType=VARCHAR}, #{totalHours,jdbcType=SMALLINT}, 
+      #{theoryHours,jdbcType=SMALLINT}, #{practiceHours,jdbcType=SMALLINT}, #{schoolYearType,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Teachplan" >
+    insert into teachplan
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teachPlanId != null" >
+        TeachPlanId,
+      </if>
+      <if test="courseId != null" >
+        CourseId,
+      </if>
+      <if test="courseTypeId != null" >
+        CourseTypeId,
+      </if>
+      <if test="gradeId != null" >
+        GradeId,
+      </if>
+      <if test="courseName != null" >
+        CourseName,
+      </if>
+      <if test="totalHours != null" >
+        TotalHours,
+      </if>
+      <if test="theoryHours != null" >
+        TheoryHours,
+      </if>
+      <if test="practiceHours != null" >
+        PracticeHours,
+      </if>
+      <if test="schoolYearType != null" >
+        SchoolYearType,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teachPlanId != null" >
+        #{teachPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=CHAR},
+      </if>
+      <if test="courseTypeId != null" >
+        #{courseTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="gradeId != null" >
+        #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalHours != null" >
+        #{totalHours,jdbcType=SMALLINT},
+      </if>
+      <if test="theoryHours != null" >
+        #{theoryHours,jdbcType=SMALLINT},
+      </if>
+      <if test="practiceHours != null" >
+        #{practiceHours,jdbcType=SMALLINT},
+      </if>
+      <if test="schoolYearType != null" >
+        #{schoolYearType,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.TeachplanExample" resultType="java.lang.Integer" >
+    select count(*) from teachplan
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teachplan
+    <set >
+      <if test="record.teachPlanId != null" >
+        TeachPlanId = #{record.teachPlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseId != null" >
+        CourseId = #{record.courseId,jdbcType=CHAR},
+      </if>
+      <if test="record.courseTypeId != null" >
+        CourseTypeId = #{record.courseTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="record.gradeId != null" >
+        GradeId = #{record.gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseName != null" >
+        CourseName = #{record.courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalHours != null" >
+        TotalHours = #{record.totalHours,jdbcType=SMALLINT},
+      </if>
+      <if test="record.theoryHours != null" >
+        TheoryHours = #{record.theoryHours,jdbcType=SMALLINT},
+      </if>
+      <if test="record.practiceHours != null" >
+        PracticeHours = #{record.practiceHours,jdbcType=SMALLINT},
+      </if>
+      <if test="record.schoolYearType != null" >
+        SchoolYearType = #{record.schoolYearType,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teachplan
+    set TeachPlanId = #{record.teachPlanId,jdbcType=VARCHAR},
+      CourseId = #{record.courseId,jdbcType=CHAR},
+      CourseTypeId = #{record.courseTypeId,jdbcType=TINYINT},
+      GradeId = #{record.gradeId,jdbcType=VARCHAR},
+      CourseName = #{record.courseName,jdbcType=VARCHAR},
+      TotalHours = #{record.totalHours,jdbcType=SMALLINT},
+      TheoryHours = #{record.theoryHours,jdbcType=SMALLINT},
+      PracticeHours = #{record.practiceHours,jdbcType=SMALLINT},
+      SchoolYearType = #{record.schoolYearType,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Teachplan" >
+    update teachplan
+    <set >
+      <if test="courseId != null" >
+        CourseId = #{courseId,jdbcType=CHAR},
+      </if>
+      <if test="courseTypeId != null" >
+        CourseTypeId = #{courseTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="gradeId != null" >
+        GradeId = #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseName != null" >
+        CourseName = #{courseName,jdbcType=VARCHAR},
+      </if>
+      <if test="totalHours != null" >
+        TotalHours = #{totalHours,jdbcType=SMALLINT},
+      </if>
+      <if test="theoryHours != null" >
+        TheoryHours = #{theoryHours,jdbcType=SMALLINT},
+      </if>
+      <if test="practiceHours != null" >
+        PracticeHours = #{practiceHours,jdbcType=SMALLINT},
+      </if>
+      <if test="schoolYearType != null" >
+        SchoolYearType = #{schoolYearType,jdbcType=TINYINT},
+      </if>
+    </set>
+    where TeachPlanId = #{teachPlanId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Teachplan" >
+    update teachplan
+    set CourseId = #{courseId,jdbcType=CHAR},
+      CourseTypeId = #{courseTypeId,jdbcType=TINYINT},
+      GradeId = #{gradeId,jdbcType=VARCHAR},
+      CourseName = #{courseName,jdbcType=VARCHAR},
+      TotalHours = #{totalHours,jdbcType=SMALLINT},
+      TheoryHours = #{theoryHours,jdbcType=SMALLINT},
+      PracticeHours = #{practiceHours,jdbcType=SMALLINT},
+      SchoolYearType = #{schoolYearType,jdbcType=TINYINT}
+    where TeachPlanId = #{teachPlanId,jdbcType=VARCHAR}
+  </update>
+</mapper>

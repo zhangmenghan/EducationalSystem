@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.CourseTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Coursetypeinfo" >
+    <id column="CourseTypeId" property="courseTypeId" jdbcType="TINYINT" />
+    <result column="CourseTypeName" property="courseTypeName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    CourseTypeId, CourseTypeName
+  </sql>
+  
+  <select id="findIdByName" resultType="java.lang.Byte" parameterType="java.lang.String" >
+    select CourseTypeId
+    from coursetypeinfo
+    where CourseTypeName = #{courseTypeName,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

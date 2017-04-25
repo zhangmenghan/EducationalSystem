@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.TeacherManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Teacherinfo" >
+    <id column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="TeacherName" property="teacherName" jdbcType="VARCHAR" />
+    <result column="TeacherIDcard" property="teacherIDcard" jdbcType="CHAR" />
+    <result column="TeacherGender" property="teacherGender" jdbcType="TINYINT" />
+    <result column="TeacherPhoto" property="teacherPhoto" jdbcType="VARCHAR" />
+    <result column="Birthdate" property="birthdate" jdbcType="DATE" />
+    <result column="Worktime" property="worktime" jdbcType="DATE" />
+    <result column="ClinicWorkYear" property="clinicWorkYear" jdbcType="TINYINT" />
+    <result column="CurrentWorkUnit" property="currentWorkUnit" jdbcType="VARCHAR" />
+    <result column="CurrentWorkTitle" property="currentWorkTitle" jdbcType="VARCHAR" />
+    <result column="CurrentWorkDuty" property="currentWorkDuty" jdbcType="VARCHAR" />
+    <result column="IsDoubleTeacher" property="isDoubleTeacher" jdbcType="BIT" />
+    <result column="HireCampus" property="hireCampus" jdbcType="VARCHAR" />
+    <result column="ContactNumber" property="contactNumber" jdbcType="VARCHAR" />
+    <result column="QQNumber" property="QQNumber" jdbcType="BIGINT" />
+    <result column="TeacherType" property="teacherType" jdbcType="TINYINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    TeacherId, TeacherName, TeacherIDcard, TeacherGender, TeacherPhoto, Birthdate, Worktime, 
+    ClinicWorkYear, CurrentWorkUnit, CurrentWorkTitle, CurrentWorkDuty, IsDoubleTeacher, 
+    HireCampus, ContactNumber, QQNumber, TeacherType
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacherinfo
+    where TeacherId = #{teacherId,jdbcType=CHAR}
+  </select>
+  <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teacherinfo
+    where TeacherName = #{teacherName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectNameById" resultType="java.lang.String" parameterType="java.lang.String" >
+    select  TeacherName
+    from teacherinfo
+    where TeacherId = #{teacherId,jdbcType=CHAR}
+  </select>
+  <select id="selectIdByName" resultType="java.lang.String" parameterType="java.lang.String" >
+    select  TeacherId
+    from teacherinfo
+    where TeacherName = #{teacherName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllTeacher" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from teacherinfo
+  </select>
+  
+</mapper>

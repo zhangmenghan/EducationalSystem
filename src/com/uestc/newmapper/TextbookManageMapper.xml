@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.TextbookManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Textbook" >
+    <id column="ISBN" property="ISBN" jdbcType="CHAR" />
+    <result column="CourseId" property="courseId" jdbcType="CHAR" />
+    <result column="TextbookName" property="textbookName" jdbcType="VARCHAR" />
+    <result column="Publisher" property="publisher" jdbcType="VARCHAR" />
+    <result column="Pubtime" property="pubtime" jdbcType="DATE" />
+    <result column="Author" property="author" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    CourseId, TextbookName, Publisher, Pubtime, ISBN, Author
+  </sql>
+  
+  
+  <select id="selectAllTextbook" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from textbook
+  </select>
+  <select id="selectByCourseId" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+    <include refid="Base_Column_List" />
+    from textbook
+    where CourseId=#{courseId}
+  </select>
+  <insert id="insertSelective" parameterType="com.uestc.model.Textbook">
+  	insert into textbook
+  	<trim prefix="(" suffix=")" suffixOverrides="," >
+  		CourseId,TextbookName,Publisher,ISBN,
+  		<if test="pubtime != null ">Pubtime, </if>
+  		<if test="author != null ">Author, </if>
+  	</trim>
+  	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		#{courseId,jdbcType=CHAR}, #{textbookName,jdbcType=VARCHAR}, #{publisher,jdbcType=VARCHAR},#{ISBN,jdbcType=CHAR}, 
+		<if test="pubtime != null ">#{pubtime,jdbcType=DATE},</if>
+        <if test="author != null ">#{author,jdbcType=VARCHAR}, </if>
+    </trim>
+  </insert>
+  <update id="updateSelectiveByISBN" parameterType="com.uestc.model.Textbook">
+  	update textbook
+  	<trim prefix="set" suffixOverrides=",">
+		CourseId = #{courseId,jdbcType=CHAR},
+     	TextbookName = #{textbookName,jdbcType=VARCHAR},
+      	Publisher = #{publisher,jdbcType=VARCHAR},
+  		<if test="pubtime != null ">Pubtime = #{pubtime,jdbcType=DATE},</if>
+        <if test="author != null ">Author = #{author,jdbcType=VARCHAR}, </if>
+	</trim>
+ 	WHERE ISBN=#{ISBN}
+  </update>
+</mapper>

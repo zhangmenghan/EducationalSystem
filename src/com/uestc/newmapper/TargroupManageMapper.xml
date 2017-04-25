@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.TargroupManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Targroup" >
+    <id column="TARGroupId" property="TARGroupId" jdbcType="CHAR" />
+    <result column="TARGroupTypeId" property="TARGroupTypeId" jdbcType="TINYINT" />
+    <result column="TARGroupName" property="TARGroupName" jdbcType="VARCHAR" />
+    <result column="TARGroupInfo" property="TARGroupInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    TARGroupId, TARGroupTypeId, TARGroupName, TARGroupInfo
+  </sql>
+  
+  <select id="selectAllTargroupName" resultType="java.lang.String" >
+    select TARGroupName
+    from targroup
+  </select>
+  <select id="selectByTargroupName" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select 
+   <include refid="Base_Column_List" />
+    from targroup
+    where TARGroupName = #{TARGroupName,jdbcType=VARCHAR}
+  </select>
+</mapper>

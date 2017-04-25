@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.RoleAuthorityAssociationMapper" >
+  
+  <resultMap id="RoleauthorityKey" type="com.uestc.model.RoleauthorityKey" >
+    <id column="RoleId" property="roleId" jdbcType="INTEGER" />
+    <id column="AuthorityId" property="authorityId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <resultMap id="AuthorityMap" type="com.uestc.model.Authoritylist" >
+    <id column="AuthorityId" property="authorityId" jdbcType="INTEGER" />
+    <result column="AuthorityName" property="authorityName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+   <resultMap id="RoleAuthorityMap" type="com.uestc.newmodel.Roleauthority" >
+    <id column="RoleId" property="roleId" jdbcType="INTEGER" />
+    <id column="RoleName" property="roleName" jdbcType="VARCHAR" />
+    <id column="AuthorityId" property="authorityId" jdbcType="INTEGER" />
+    <id column="AuthorityName" property="authorityName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="RoleauthorityKey" >
+    RoleId, AuthorityId
+  </sql>
+  
+  <sql id="Authority_List" >
+    AuthorityId, AuthorityName
+  </sql>
+  
+  <select id="selectAuthorityByUserId" resultMap="RoleAuthorityMap" parameterType="String" >
+  
+ 	select ra.RoleId,r.RoleName,ra.AuthorityId,a.AuthorityName
+ 	from roleauthority ra 
+	LEFT JOIN roleinfo r on ra.RoleId = r.RoleId
+	left join authoritylist a on ra.AuthorityId = a.AuthorityId 
+	LEFT JOIN userrole ur on ur.RoleId = r.RoleId
+	left join userinfo u on ur.UserId = u.UserId 
+	where u.UserId = #{userId,jdbcType=VARCHAR};
+    
+  </select>
+  
+  <select id="selectAuthorityByRoleId" resultMap="RoleAuthorityMap" parameterType="java.lang.Integer" >
+  
+    select ra.RoleId,r.RoleName,ra.AuthorityId,a.AuthorityName
+ 	from roleauthority ra 
+	LEFT JOIN roleinfo r on ra.RoleId = r.RoleId
+	left join authoritylist a on ra.AuthorityId = a.AuthorityId 
+	where ra.RoleId = #{roleId,jdbcType=INTEGER}
+	
+  </select>
+  
+  <select id="selectAllAuthority" resultMap="AuthorityMap"  >
+    select 
+    <include refid="Authority_List" />
+    from authoritylist
+  </select>
+  
+  <delete id="deleteAuthorityByRoleId" parameterType="java.lang.Integer" >
+    delete from roleauthority
+    where RoleId = #{roleId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertRoleauthorityByChoose"  parameterType="ArrayList">  
+      insert into roleauthority (RoleId, AuthorityId) 
+      values
+      <foreach collection="list" item="item" index="index" separator="," >
+        (
+        #{item.roleId,jdbcType=INTEGER}, #{item.authorityId,jdbcType=INTEGER}
+        )   
+    </foreach> 
+  </insert>  
+  
+</mapper>

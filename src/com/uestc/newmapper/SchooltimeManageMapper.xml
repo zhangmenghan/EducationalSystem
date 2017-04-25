@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.SchooltimeManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Schooltime" >
+    <result column="StartYear" property="startYear" jdbcType="VARCHAR" />
+    <result column="StartSemester" property="startSemester" jdbcType="TINYINT" />
+    <result column="StartTime" property="startTime" jdbcType="DATE" />
+    <result column="StartEvaTeachTime" property="startEvaTeachTime" jdbcType="DATE" />
+    <result column="EndEvaTeachTime" property="endEvaTeachTime" jdbcType="DATE" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    StartYear, StartSemester, StartTime, StartEvaTeachTime, EndEvaTeachTime
+  </sql>
+  <select id="getAllSchoolTime" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from schooltime
+  </select>
+  <select id="selectByStartTime" resultMap="BaseResultMap" parameterType="java.util.Date">
+    select
+    <include refid="Base_Column_List" />
+    from schooltime
+    where StartTime=#{startTime,jdbcType=DATE}
+  </select>
+</mapper>

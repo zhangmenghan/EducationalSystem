@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.ForbiddentimeMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Forbiddentime" >
+    <id column="ForbiddenTimeId" property="forbiddenTimeId" jdbcType="INTEGER" />
+    <result column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="ApplicationTerm" property="applicationTerm" jdbcType="VARCHAR" />
+    <result column="ApplicationDay" property="applicationDay" jdbcType="TINYINT" />
+    <result column="AuditType" property="auditType" jdbcType="TINYINT" />
+    <result column="ApplicationTime" property="applicationTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ForbiddenTimeId, TeacherId, ApplicationTerm, ApplicationDay, AuditType, ApplicationTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.ForbiddentimeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from forbiddentime
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from forbiddentime
+    where ForbiddenTimeId = #{forbiddenTimeId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from forbiddentime
+    where ForbiddenTimeId = #{forbiddenTimeId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.ForbiddentimeExample" >
+    delete from forbiddentime
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Forbiddentime" >
+    insert into forbiddentime (ForbiddenTimeId, TeacherId, ApplicationTerm, 
+      ApplicationDay, AuditType, ApplicationTime
+      )
+    values (#{forbiddenTimeId,jdbcType=INTEGER}, #{teacherId,jdbcType=CHAR}, #{applicationTerm,jdbcType=VARCHAR}, 
+      #{applicationDay,jdbcType=TINYINT}, #{auditType,jdbcType=TINYINT}, #{applicationTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Forbiddentime" >
+    insert into forbiddentime
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="forbiddenTimeId != null" >
+        ForbiddenTimeId,
+      </if>
+      <if test="teacherId != null" >
+        TeacherId,
+      </if>
+      <if test="applicationTerm != null" >
+        ApplicationTerm,
+      </if>
+      <if test="applicationDay != null" >
+        ApplicationDay,
+      </if>
+      <if test="auditType != null" >
+        AuditType,
+      </if>
+      <if test="applicationTime != null" >
+        ApplicationTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="forbiddenTimeId != null" >
+        #{forbiddenTimeId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="applicationTerm != null" >
+        #{applicationTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDay != null" >
+        #{applicationDay,jdbcType=TINYINT},
+      </if>
+      <if test="auditType != null" >
+        #{auditType,jdbcType=TINYINT},
+      </if>
+      <if test="applicationTime != null" >
+        #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.ForbiddentimeExample" resultType="java.lang.Integer" >
+    select count(*) from forbiddentime
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update forbiddentime
+    <set >
+      <if test="record.forbiddenTimeId != null" >
+        ForbiddenTimeId = #{record.forbiddenTimeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        TeacherId = #{record.teacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.applicationTerm != null" >
+        ApplicationTerm = #{record.applicationTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationDay != null" >
+        ApplicationDay = #{record.applicationDay,jdbcType=TINYINT},
+      </if>
+      <if test="record.auditType != null" >
+        AuditType = #{record.auditType,jdbcType=TINYINT},
+      </if>
+      <if test="record.applicationTime != null" >
+        ApplicationTime = #{record.applicationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update forbiddentime
+    set ForbiddenTimeId = #{record.forbiddenTimeId,jdbcType=INTEGER},
+      TeacherId = #{record.teacherId,jdbcType=CHAR},
+      ApplicationTerm = #{record.applicationTerm,jdbcType=VARCHAR},
+      ApplicationDay = #{record.applicationDay,jdbcType=TINYINT},
+      AuditType = #{record.auditType,jdbcType=TINYINT},
+      ApplicationTime = #{record.applicationTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Forbiddentime" >
+    update forbiddentime
+    <set >
+      <if test="teacherId != null" >
+        TeacherId = #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="applicationTerm != null" >
+        ApplicationTerm = #{applicationTerm,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationDay != null" >
+        ApplicationDay = #{applicationDay,jdbcType=TINYINT},
+      </if>
+      <if test="auditType != null" >
+        AuditType = #{auditType,jdbcType=TINYINT},
+      </if>
+      <if test="applicationTime != null" >
+        ApplicationTime = #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ForbiddenTimeId = #{forbiddenTimeId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Forbiddentime" >
+    update forbiddentime
+    set TeacherId = #{teacherId,jdbcType=CHAR},
+      ApplicationTerm = #{applicationTerm,jdbcType=VARCHAR},
+      ApplicationDay = #{applicationDay,jdbcType=TINYINT},
+      AuditType = #{auditType,jdbcType=TINYINT},
+      ApplicationTime = #{applicationTime,jdbcType=TIMESTAMP}
+    where ForbiddenTimeId = #{forbiddenTimeId,jdbcType=INTEGER}
+  </update>
+</mapper>

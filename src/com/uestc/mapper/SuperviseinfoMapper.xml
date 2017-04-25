@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.SuperviseinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Superviseinfo" >
+    <id column="SuperviseId" property="superviseId" jdbcType="VARCHAR" />
+    <result column="CourseAssociationId" property="courseAssociationId" jdbcType="VARCHAR" />
+    <result column="SupervisorId" property="supervisorId" jdbcType="CHAR" />
+    <result column="SuperviseTime" property="superviseTime" jdbcType="VARCHAR" />
+    <result column="TeachContent" property="teachContent" jdbcType="VARCHAR" />
+    <result column="TeacherQualityScored" property="teacherQualityScored" jdbcType="REAL" />
+    <result column="TeachGoalsScored" property="teachGoalsScored" jdbcType="REAL" />
+    <result column="TeachContentScored" property="teachContentScored" jdbcType="REAL" />
+    <result column="TeachMethodsScored" property="teachMethodsScored" jdbcType="REAL" />
+    <result column="TeachRoutineScored" property="teachRoutineScored" jdbcType="REAL" />
+    <result column="TeachEffectScored" property="teachEffectScored" jdbcType="REAL" />
+    <result column="Status" property="status" jdbcType="TINYINT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.uestc.model.SuperviseinfoWithBLOBs" extends="BaseResultMap" >
+    <result column="AttendanceInfo" property="attendanceInfo" jdbcType="LONGVARCHAR" />
+    <result column="CommentsInfo" property="commentsInfo" jdbcType="LONGVARCHAR" />
+    <result column="ForwardInfo" property="forwardInfo" jdbcType="LONGVARCHAR" />
+    <result column="FeedbackInfo" property="feedbackInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SuperviseId, CourseAssociationId, SupervisorId, SuperviseTime, TeachContent, TeacherQualityScored, 
+    TeachGoalsScored, TeachContentScored, TeachMethodsScored, TeachRoutineScored, TeachEffectScored, 
+    Status
+  </sql>
+  <sql id="Blob_Column_List" >
+    AttendanceInfo, CommentsInfo, ForwardInfo, FeedbackInfo
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.uestc.model.SuperviseinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from superviseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.SuperviseinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from superviseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from superviseinfo
+    where SuperviseId = #{superviseId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from superviseinfo
+    where SuperviseId = #{superviseId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.SuperviseinfoExample" >
+    delete from superviseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.SuperviseinfoWithBLOBs" >
+    insert into superviseinfo (SuperviseId, CourseAssociationId, 
+      SupervisorId, SuperviseTime, TeachContent, 
+      TeacherQualityScored, TeachGoalsScored, TeachContentScored, 
+      TeachMethodsScored, TeachRoutineScored, TeachEffectScored, 
+      Status, AttendanceInfo, CommentsInfo, 
+      ForwardInfo, FeedbackInfo)
+    values (#{superviseId,jdbcType=VARCHAR}, #{courseAssociationId,jdbcType=VARCHAR}, 
+      #{supervisorId,jdbcType=CHAR}, #{superviseTime,jdbcType=VARCHAR}, #{teachContent,jdbcType=VARCHAR}, 
+      #{teacherQualityScored,jdbcType=REAL}, #{teachGoalsScored,jdbcType=REAL}, #{teachContentScored,jdbcType=REAL}, 
+      #{teachMethodsScored,jdbcType=REAL}, #{teachRoutineScored,jdbcType=REAL}, #{teachEffectScored,jdbcType=REAL}, 
+      #{status,jdbcType=TINYINT}, #{attendanceInfo,jdbcType=LONGVARCHAR}, #{commentsInfo,jdbcType=LONGVARCHAR}, 
+      #{forwardInfo,jdbcType=LONGVARCHAR}, #{feedbackInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.SuperviseinfoWithBLOBs" >
+    insert into superviseinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="superviseId != null" >
+        SuperviseId,
+      </if>
+      <if test="courseAssociationId != null" >
+        CourseAssociationId,
+      </if>
+      <if test="supervisorId != null" >
+        SupervisorId,
+      </if>
+      <if test="superviseTime != null" >
+        SuperviseTime,
+      </if>
+      <if test="teachContent != null" >
+        TeachContent,
+      </if>
+      <if test="teacherQualityScored != null" >
+        TeacherQualityScored,
+      </if>
+      <if test="teachGoalsScored != null" >
+        TeachGoalsScored,
+      </if>
+      <if test="teachContentScored != null" >
+        TeachContentScored,
+      </if>
+      <if test="teachMethodsScored != null" >
+        TeachMethodsScored,
+      </if>
+      <if test="teachRoutineScored != null" >
+        TeachRoutineScored,
+      </if>
+      <if test="teachEffectScored != null" >
+        TeachEffectScored,
+      </if>
+      <if test="status != null" >
+        Status,
+      </if>
+      <if test="attendanceInfo != null" >
+        AttendanceInfo,
+      </if>
+      <if test="commentsInfo != null" >
+        CommentsInfo,
+      </if>
+      <if test="forwardInfo != null" >
+        ForwardInfo,
+      </if>
+      <if test="feedbackInfo != null" >
+        FeedbackInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="superviseId != null" >
+        #{superviseId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAssociationId != null" >
+        #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisorId != null" >
+        #{supervisorId,jdbcType=CHAR},
+      </if>
+      <if test="superviseTime != null" >
+        #{superviseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="teachContent != null" >
+        #{teachContent,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherQualityScored != null" >
+        #{teacherQualityScored,jdbcType=REAL},
+      </if>
+      <if test="teachGoalsScored != null" >
+        #{teachGoalsScored,jdbcType=REAL},
+      </if>
+      <if test="teachContentScored != null" >
+        #{teachContentScored,jdbcType=REAL},
+      </if>
+      <if test="teachMethodsScored != null" >
+        #{teachMethodsScored,jdbcType=REAL},
+      </if>
+      <if test="teachRoutineScored != null" >
+        #{teachRoutineScored,jdbcType=REAL},
+      </if>
+      <if test="teachEffectScored != null" >
+        #{teachEffectScored,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="attendanceInfo != null" >
+        #{attendanceInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commentsInfo != null" >
+        #{commentsInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="forwardInfo != null" >
+        #{forwardInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="feedbackInfo != null" >
+        #{feedbackInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.SuperviseinfoExample" resultType="java.lang.Integer" >
+    select count(*) from superviseinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update superviseinfo
+    <set >
+      <if test="record.superviseId != null" >
+        SuperviseId = #{record.superviseId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseAssociationId != null" >
+        CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supervisorId != null" >
+        SupervisorId = #{record.supervisorId,jdbcType=CHAR},
+      </if>
+      <if test="record.superviseTime != null" >
+        SuperviseTime = #{record.superviseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teachContent != null" >
+        TeachContent = #{record.teachContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherQualityScored != null" >
+        TeacherQualityScored = #{record.teacherQualityScored,jdbcType=REAL},
+      </if>
+      <if test="record.teachGoalsScored != null" >
+        TeachGoalsScored = #{record.teachGoalsScored,jdbcType=REAL},
+      </if>
+      <if test="record.teachContentScored != null" >
+        TeachContentScored = #{record.teachContentScored,jdbcType=REAL},
+      </if>
+      <if test="record.teachMethodsScored != null" >
+        TeachMethodsScored = #{record.teachMethodsScored,jdbcType=REAL},
+      </if>
+      <if test="record.teachRoutineScored != null" >
+        TeachRoutineScored = #{record.teachRoutineScored,jdbcType=REAL},
+      </if>
+      <if test="record.teachEffectScored != null" >
+        TeachEffectScored = #{record.teachEffectScored,jdbcType=REAL},
+      </if>
+      <if test="record.status != null" >
+        Status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.attendanceInfo != null" >
+        AttendanceInfo = #{record.attendanceInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.commentsInfo != null" >
+        CommentsInfo = #{record.commentsInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.forwardInfo != null" >
+        ForwardInfo = #{record.forwardInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.feedbackInfo != null" >
+        FeedbackInfo = #{record.feedbackInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update superviseinfo
+    set SuperviseId = #{record.superviseId,jdbcType=VARCHAR},
+      CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      SupervisorId = #{record.supervisorId,jdbcType=CHAR},
+      SuperviseTime = #{record.superviseTime,jdbcType=VARCHAR},
+      TeachContent = #{record.teachContent,jdbcType=VARCHAR},
+      TeacherQualityScored = #{record.teacherQualityScored,jdbcType=REAL},
+      TeachGoalsScored = #{record.teachGoalsScored,jdbcType=REAL},
+      TeachContentScored = #{record.teachContentScored,jdbcType=REAL},
+      TeachMethodsScored = #{record.teachMethodsScored,jdbcType=REAL},
+      TeachRoutineScored = #{record.teachRoutineScored,jdbcType=REAL},
+      TeachEffectScored = #{record.teachEffectScored,jdbcType=REAL},
+      Status = #{record.status,jdbcType=TINYINT},
+      AttendanceInfo = #{record.attendanceInfo,jdbcType=LONGVARCHAR},
+      CommentsInfo = #{record.commentsInfo,jdbcType=LONGVARCHAR},
+      ForwardInfo = #{record.forwardInfo,jdbcType=LONGVARCHAR},
+      FeedbackInfo = #{record.feedbackInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update superviseinfo
+    set SuperviseId = #{record.superviseId,jdbcType=VARCHAR},
+      CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      SupervisorId = #{record.supervisorId,jdbcType=CHAR},
+      SuperviseTime = #{record.superviseTime,jdbcType=VARCHAR},
+      TeachContent = #{record.teachContent,jdbcType=VARCHAR},
+      TeacherQualityScored = #{record.teacherQualityScored,jdbcType=REAL},
+      TeachGoalsScored = #{record.teachGoalsScored,jdbcType=REAL},
+      TeachContentScored = #{record.teachContentScored,jdbcType=REAL},
+      TeachMethodsScored = #{record.teachMethodsScored,jdbcType=REAL},
+      TeachRoutineScored = #{record.teachRoutineScored,jdbcType=REAL},
+      TeachEffectScored = #{record.teachEffectScored,jdbcType=REAL},
+      Status = #{record.status,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.SuperviseinfoWithBLOBs" >
+    update superviseinfo
+    <set >
+      <if test="courseAssociationId != null" >
+        CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="supervisorId != null" >
+        SupervisorId = #{supervisorId,jdbcType=CHAR},
+      </if>
+      <if test="superviseTime != null" >
+        SuperviseTime = #{superviseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="teachContent != null" >
+        TeachContent = #{teachContent,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherQualityScored != null" >
+        TeacherQualityScored = #{teacherQualityScored,jdbcType=REAL},
+      </if>
+      <if test="teachGoalsScored != null" >
+        TeachGoalsScored = #{teachGoalsScored,jdbcType=REAL},
+      </if>
+      <if test="teachContentScored != null" >
+        TeachContentScored = #{teachContentScored,jdbcType=REAL},
+      </if>
+      <if test="teachMethodsScored != null" >
+        TeachMethodsScored = #{teachMethodsScored,jdbcType=REAL},
+      </if>
+      <if test="teachRoutineScored != null" >
+        TeachRoutineScored = #{teachRoutineScored,jdbcType=REAL},
+      </if>
+      <if test="teachEffectScored != null" >
+        TeachEffectScored = #{teachEffectScored,jdbcType=REAL},
+      </if>
+      <if test="status != null" >
+        Status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="attendanceInfo != null" >
+        AttendanceInfo = #{attendanceInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="commentsInfo != null" >
+        CommentsInfo = #{commentsInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="forwardInfo != null" >
+        ForwardInfo = #{forwardInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="feedbackInfo != null" >
+        FeedbackInfo = #{feedbackInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where SuperviseId = #{superviseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.uestc.model.SuperviseinfoWithBLOBs" >
+    update superviseinfo
+    set CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      SupervisorId = #{supervisorId,jdbcType=CHAR},
+      SuperviseTime = #{superviseTime,jdbcType=VARCHAR},
+      TeachContent = #{teachContent,jdbcType=VARCHAR},
+      TeacherQualityScored = #{teacherQualityScored,jdbcType=REAL},
+      TeachGoalsScored = #{teachGoalsScored,jdbcType=REAL},
+      TeachContentScored = #{teachContentScored,jdbcType=REAL},
+      TeachMethodsScored = #{teachMethodsScored,jdbcType=REAL},
+      TeachRoutineScored = #{teachRoutineScored,jdbcType=REAL},
+      TeachEffectScored = #{teachEffectScored,jdbcType=REAL},
+      Status = #{status,jdbcType=TINYINT},
+      AttendanceInfo = #{attendanceInfo,jdbcType=LONGVARCHAR},
+      CommentsInfo = #{commentsInfo,jdbcType=LONGVARCHAR},
+      ForwardInfo = #{forwardInfo,jdbcType=LONGVARCHAR},
+      FeedbackInfo = #{feedbackInfo,jdbcType=LONGVARCHAR}
+    where SuperviseId = #{superviseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Superviseinfo" >
+    update superviseinfo
+    set CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      SupervisorId = #{supervisorId,jdbcType=CHAR},
+      SuperviseTime = #{superviseTime,jdbcType=VARCHAR},
+      TeachContent = #{teachContent,jdbcType=VARCHAR},
+      TeacherQualityScored = #{teacherQualityScored,jdbcType=REAL},
+      TeachGoalsScored = #{teachGoalsScored,jdbcType=REAL},
+      TeachContentScored = #{teachContentScored,jdbcType=REAL},
+      TeachMethodsScored = #{teachMethodsScored,jdbcType=REAL},
+      TeachRoutineScored = #{teachRoutineScored,jdbcType=REAL},
+      TeachEffectScored = #{teachEffectScored,jdbcType=REAL},
+      Status = #{status,jdbcType=TINYINT}
+    where SuperviseId = #{superviseId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.TimeandplaceMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Timeandplace" >
+    <id column="TimeAndPlaceId" property="timeAndPlaceId" jdbcType="VARCHAR" />
+    <result column="Year" property="year" jdbcType="VARCHAR" />
+    <result column="Semester" property="semester" jdbcType="TINYINT" />
+    <result column="Week" property="week" jdbcType="TINYINT" />
+    <result column="Weekdays" property="weekdays" jdbcType="TINYINT" />
+    <result column="LessonNum" property="lessonNum" jdbcType="TINYINT" />
+    <result column="LessonNumber" property="lessonNumber" jdbcType="TINYINT" />
+    <result column="ClassroomId" property="classroomId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TimeAndPlaceId, Year, Semester, Week, Weekdays, LessonNum, LessonNumber, ClassroomId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.TimeandplaceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from timeandplace
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from timeandplace
+    where TimeAndPlaceId = #{timeAndPlaceId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from timeandplace
+    where TimeAndPlaceId = #{timeAndPlaceId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.TimeandplaceExample" >
+    delete from timeandplace
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Timeandplace" >
+    insert into timeandplace (TimeAndPlaceId, Year, Semester, 
+      Week, Weekdays, LessonNum, 
+      LessonNumber, ClassroomId)
+    values (#{timeAndPlaceId,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{semester,jdbcType=TINYINT}, 
+      #{week,jdbcType=TINYINT}, #{weekdays,jdbcType=TINYINT}, #{lessonNum,jdbcType=TINYINT}, 
+      #{lessonNumber,jdbcType=TINYINT}, #{classroomId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Timeandplace" >
+    insert into timeandplace
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="timeAndPlaceId != null" >
+        TimeAndPlaceId,
+      </if>
+      <if test="year != null" >
+        Year,
+      </if>
+      <if test="semester != null" >
+        Semester,
+      </if>
+      <if test="week != null" >
+        Week,
+      </if>
+      <if test="weekdays != null" >
+        Weekdays,
+      </if>
+      <if test="lessonNum != null" >
+        LessonNum,
+      </if>
+      <if test="lessonNumber != null" >
+        LessonNumber,
+      </if>
+      <if test="classroomId != null" >
+        ClassroomId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="timeAndPlaceId != null" >
+        #{timeAndPlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="semester != null" >
+        #{semester,jdbcType=TINYINT},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=TINYINT},
+      </if>
+      <if test="weekdays != null" >
+        #{weekdays,jdbcType=TINYINT},
+      </if>
+      <if test="lessonNum != null" >
+        #{lessonNum,jdbcType=TINYINT},
+      </if>
+      <if test="lessonNumber != null" >
+        #{lessonNumber,jdbcType=TINYINT},
+      </if>
+      <if test="classroomId != null" >
+        #{classroomId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.TimeandplaceExample" resultType="java.lang.Integer" >
+    select count(*) from timeandplace
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update timeandplace
+    <set >
+      <if test="record.timeAndPlaceId != null" >
+        TimeAndPlaceId = #{record.timeAndPlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        Year = #{record.year,jdbcType=VARCHAR},
+      </if>
+      <if test="record.semester != null" >
+        Semester = #{record.semester,jdbcType=TINYINT},
+      </if>
+      <if test="record.week != null" >
+        Week = #{record.week,jdbcType=TINYINT},
+      </if>
+      <if test="record.weekdays != null" >
+        Weekdays = #{record.weekdays,jdbcType=TINYINT},
+      </if>
+      <if test="record.lessonNum != null" >
+        LessonNum = #{record.lessonNum,jdbcType=TINYINT},
+      </if>
+      <if test="record.lessonNumber != null" >
+        LessonNumber = #{record.lessonNumber,jdbcType=TINYINT},
+      </if>
+      <if test="record.classroomId != null" >
+        ClassroomId = #{record.classroomId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update timeandplace
+    set TimeAndPlaceId = #{record.timeAndPlaceId,jdbcType=VARCHAR},
+      Year = #{record.year,jdbcType=VARCHAR},
+      Semester = #{record.semester,jdbcType=TINYINT},
+      Week = #{record.week,jdbcType=TINYINT},
+      Weekdays = #{record.weekdays,jdbcType=TINYINT},
+      LessonNum = #{record.lessonNum,jdbcType=TINYINT},
+      LessonNumber = #{record.lessonNumber,jdbcType=TINYINT},
+      ClassroomId = #{record.classroomId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Timeandplace" >
+    update timeandplace
+    <set >
+      <if test="year != null" >
+        Year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="semester != null" >
+        Semester = #{semester,jdbcType=TINYINT},
+      </if>
+      <if test="week != null" >
+        Week = #{week,jdbcType=TINYINT},
+      </if>
+      <if test="weekdays != null" >
+        Weekdays = #{weekdays,jdbcType=TINYINT},
+      </if>
+      <if test="lessonNum != null" >
+        LessonNum = #{lessonNum,jdbcType=TINYINT},
+      </if>
+      <if test="lessonNumber != null" >
+        LessonNumber = #{lessonNumber,jdbcType=TINYINT},
+      </if>
+      <if test="classroomId != null" >
+        ClassroomId = #{classroomId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TimeAndPlaceId = #{timeAndPlaceId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Timeandplace" >
+    update timeandplace
+    set Year = #{year,jdbcType=VARCHAR},
+      Semester = #{semester,jdbcType=TINYINT},
+      Week = #{week,jdbcType=TINYINT},
+      Weekdays = #{weekdays,jdbcType=TINYINT},
+      LessonNum = #{lessonNum,jdbcType=TINYINT},
+      LessonNumber = #{lessonNumber,jdbcType=TINYINT},
+      ClassroomId = #{classroomId,jdbcType=VARCHAR}
+    where TimeAndPlaceId = #{timeAndPlaceId,jdbcType=VARCHAR}
+  </update>
+</mapper>

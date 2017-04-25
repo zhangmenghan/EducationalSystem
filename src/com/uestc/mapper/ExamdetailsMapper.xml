@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.ExamdetailsMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Examdetails" >
+    <id column="ExamDetailsId" property="examDetailsId" jdbcType="VARCHAR" />
+    <result column="TimeAndPlaceId" property="timeAndPlaceId" jdbcType="VARCHAR" />
+    <result column="CourseAssociationId" property="courseAssociationId" jdbcType="VARCHAR" />
+    <result column="InvigilatorFir" property="invigilatorFir" jdbcType="CHAR" />
+    <result column="InvigilatorSec" property="invigilatorSec" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ExamDetailsId, TimeAndPlaceId, CourseAssociationId, InvigilatorFir, InvigilatorSec
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.ExamdetailsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from examdetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from examdetails
+    where ExamDetailsId = #{examDetailsId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from examdetails
+    where ExamDetailsId = #{examDetailsId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.ExamdetailsExample" >
+    delete from examdetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Examdetails" >
+    insert into examdetails (ExamDetailsId, TimeAndPlaceId, CourseAssociationId, 
+      InvigilatorFir, InvigilatorSec)
+    values (#{examDetailsId,jdbcType=VARCHAR}, #{timeAndPlaceId,jdbcType=VARCHAR}, #{courseAssociationId,jdbcType=VARCHAR}, 
+      #{invigilatorFir,jdbcType=CHAR}, #{invigilatorSec,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Examdetails" >
+    insert into examdetails
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="examDetailsId != null" >
+        ExamDetailsId,
+      </if>
+      <if test="timeAndPlaceId != null" >
+        TimeAndPlaceId,
+      </if>
+      <if test="courseAssociationId != null" >
+        CourseAssociationId,
+      </if>
+      <if test="invigilatorFir != null" >
+        InvigilatorFir,
+      </if>
+      <if test="invigilatorSec != null" >
+        InvigilatorSec,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="examDetailsId != null" >
+        #{examDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="timeAndPlaceId != null" >
+        #{timeAndPlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAssociationId != null" >
+        #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="invigilatorFir != null" >
+        #{invigilatorFir,jdbcType=CHAR},
+      </if>
+      <if test="invigilatorSec != null" >
+        #{invigilatorSec,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.ExamdetailsExample" resultType="java.lang.Integer" >
+    select count(*) from examdetails
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update examdetails
+    <set >
+      <if test="record.examDetailsId != null" >
+        ExamDetailsId = #{record.examDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timeAndPlaceId != null" >
+        TimeAndPlaceId = #{record.timeAndPlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseAssociationId != null" >
+        CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invigilatorFir != null" >
+        InvigilatorFir = #{record.invigilatorFir,jdbcType=CHAR},
+      </if>
+      <if test="record.invigilatorSec != null" >
+        InvigilatorSec = #{record.invigilatorSec,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update examdetails
+    set ExamDetailsId = #{record.examDetailsId,jdbcType=VARCHAR},
+      TimeAndPlaceId = #{record.timeAndPlaceId,jdbcType=VARCHAR},
+      CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      InvigilatorFir = #{record.invigilatorFir,jdbcType=CHAR},
+      InvigilatorSec = #{record.invigilatorSec,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Examdetails" >
+    update examdetails
+    <set >
+      <if test="timeAndPlaceId != null" >
+        TimeAndPlaceId = #{timeAndPlaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAssociationId != null" >
+        CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="invigilatorFir != null" >
+        InvigilatorFir = #{invigilatorFir,jdbcType=CHAR},
+      </if>
+      <if test="invigilatorSec != null" >
+        InvigilatorSec = #{invigilatorSec,jdbcType=CHAR},
+      </if>
+    </set>
+    where ExamDetailsId = #{examDetailsId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Examdetails" >
+    update examdetails
+    set TimeAndPlaceId = #{timeAndPlaceId,jdbcType=VARCHAR},
+      CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      InvigilatorFir = #{invigilatorFir,jdbcType=CHAR},
+      InvigilatorSec = #{invigilatorSec,jdbcType=CHAR}
+    where ExamDetailsId = #{examDetailsId,jdbcType=VARCHAR}
+  </update>
+</mapper>

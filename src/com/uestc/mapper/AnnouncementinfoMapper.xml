@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.AnnouncementinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Announcementinfo" >
+    <id column="AnnouncementId" property="announcementId" jdbcType="INTEGER" />
+    <result column="AnnouncementName" property="announcementName" jdbcType="VARCHAR" />
+    <result column="AnnouncementTime" property="announcementTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.uestc.model.Announcementinfo" extends="BaseResultMap" >
+    <result column="AnnouncementContent" property="announcementContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    AnnouncementId, AnnouncementName, AnnouncementTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    AnnouncementContent
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.uestc.model.AnnouncementinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from announcementinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.AnnouncementinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from announcementinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from announcementinfo
+    where AnnouncementId = #{announcementId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from announcementinfo
+    where AnnouncementId = #{announcementId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.AnnouncementinfoExample" >
+    delete from announcementinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Announcementinfo" >
+    insert into announcementinfo (AnnouncementId, AnnouncementName, 
+      AnnouncementTime, AnnouncementContent
+      )
+    values (#{announcementId,jdbcType=INTEGER}, #{announcementName,jdbcType=VARCHAR}, 
+      #{announcementTime,jdbcType=TIMESTAMP}, #{announcementContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Announcementinfo" >
+    insert into announcementinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="announcementId != null" >
+        AnnouncementId,
+      </if>
+      <if test="announcementName != null" >
+        AnnouncementName,
+      </if>
+      <if test="announcementTime != null" >
+        AnnouncementTime,
+      </if>
+      <if test="announcementContent != null" >
+        AnnouncementContent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="announcementId != null" >
+        #{announcementId,jdbcType=INTEGER},
+      </if>
+      <if test="announcementName != null" >
+        #{announcementName,jdbcType=VARCHAR},
+      </if>
+      <if test="announcementTime != null" >
+        #{announcementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="announcementContent != null" >
+        #{announcementContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.AnnouncementinfoExample" resultType="java.lang.Integer" >
+    select count(*) from announcementinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update announcementinfo
+    <set >
+      <if test="record.announcementId != null" >
+        AnnouncementId = #{record.announcementId,jdbcType=INTEGER},
+      </if>
+      <if test="record.announcementName != null" >
+        AnnouncementName = #{record.announcementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.announcementTime != null" >
+        AnnouncementTime = #{record.announcementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.announcementContent != null" >
+        AnnouncementContent = #{record.announcementContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update announcementinfo
+    set AnnouncementId = #{record.announcementId,jdbcType=INTEGER},
+      AnnouncementName = #{record.announcementName,jdbcType=VARCHAR},
+      AnnouncementTime = #{record.announcementTime,jdbcType=TIMESTAMP},
+      AnnouncementContent = #{record.announcementContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update announcementinfo
+    set AnnouncementId = #{record.announcementId,jdbcType=INTEGER},
+      AnnouncementName = #{record.announcementName,jdbcType=VARCHAR},
+      AnnouncementTime = #{record.announcementTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Announcementinfo" >
+    update announcementinfo
+    <set >
+      <if test="announcementName != null" >
+        AnnouncementName = #{announcementName,jdbcType=VARCHAR},
+      </if>
+      <if test="announcementTime != null" >
+        AnnouncementTime = #{announcementTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="announcementContent != null" >
+        AnnouncementContent = #{announcementContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where AnnouncementId = #{announcementId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.uestc.model.Announcementinfo" >
+    update announcementinfo
+    set AnnouncementName = #{announcementName,jdbcType=VARCHAR},
+      AnnouncementTime = #{announcementTime,jdbcType=TIMESTAMP},
+      AnnouncementContent = #{announcementContent,jdbcType=LONGVARCHAR}
+    where AnnouncementId = #{announcementId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Announcementinfo" >
+    update announcementinfo
+    set AnnouncementName = #{announcementName,jdbcType=VARCHAR},
+      AnnouncementTime = #{announcementTime,jdbcType=TIMESTAMP}
+    where AnnouncementId = #{announcementId,jdbcType=INTEGER}
+  </update>
+</mapper>

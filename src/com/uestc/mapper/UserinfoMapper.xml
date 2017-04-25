@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.UserinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Userinfo" >
+    <id column="UserId" property="userId" jdbcType="VARCHAR" />
+    <result column="UserName" property="userName" jdbcType="VARCHAR" />
+    <result column="UserPwd" property="userPwd" jdbcType="CHAR" />
+    <result column="UserType" property="userType" jdbcType="TINYINT" />
+    <result column="PhoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="EmailAddress" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="ValidataCode" property="validataCode" jdbcType="VARCHAR" />
+    <result column="OutDate" property="outDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UserId, UserName, UserPwd, UserType, PhoneNumber, EmailAddress, ValidataCode, OutDate
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.UserinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from userinfo
+    where UserId = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from userinfo
+    where UserId = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.UserinfoExample" >
+    delete from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Userinfo" >
+    insert into userinfo (UserId, UserName, UserPwd, 
+      UserType, PhoneNumber, EmailAddress, 
+      ValidataCode, OutDate)
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userPwd,jdbcType=CHAR}, 
+      #{userType,jdbcType=TINYINT}, #{phoneNumber,jdbcType=VARCHAR}, #{emailAddress,jdbcType=VARCHAR}, 
+      #{validataCode,jdbcType=VARCHAR}, #{outDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Userinfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        UserId,
+      </if>
+      <if test="userName != null" >
+        UserName,
+      </if>
+      <if test="userPwd != null" >
+        UserPwd,
+      </if>
+      <if test="userType != null" >
+        UserType,
+      </if>
+      <if test="phoneNumber != null" >
+        PhoneNumber,
+      </if>
+      <if test="emailAddress != null" >
+        EmailAddress,
+      </if>
+      <if test="validataCode != null" >
+        ValidataCode,
+      </if>
+      <if test="outDate != null" >
+        OutDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=TINYINT},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null" >
+        #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="validataCode != null" >
+        #{validataCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outDate != null" >
+        #{outDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.UserinfoExample" resultType="java.lang.Integer" >
+    select count(*) from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userinfo
+    <set >
+      <if test="record.userId != null" >
+        UserId = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        UserName = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPwd != null" >
+        UserPwd = #{record.userPwd,jdbcType=CHAR},
+      </if>
+      <if test="record.userType != null" >
+        UserType = #{record.userType,jdbcType=TINYINT},
+      </if>
+      <if test="record.phoneNumber != null" >
+        PhoneNumber = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailAddress != null" >
+        EmailAddress = #{record.emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validataCode != null" >
+        ValidataCode = #{record.validataCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outDate != null" >
+        OutDate = #{record.outDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userinfo
+    set UserId = #{record.userId,jdbcType=VARCHAR},
+      UserName = #{record.userName,jdbcType=VARCHAR},
+      UserPwd = #{record.userPwd,jdbcType=CHAR},
+      UserType = #{record.userType,jdbcType=TINYINT},
+      PhoneNumber = #{record.phoneNumber,jdbcType=VARCHAR},
+      EmailAddress = #{record.emailAddress,jdbcType=VARCHAR},
+      ValidataCode = #{record.validataCode,jdbcType=VARCHAR},
+      OutDate = #{record.outDate,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Userinfo" >
+    update userinfo
+    <set >
+      <if test="userName != null" >
+        UserName = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null" >
+        UserPwd = #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userType != null" >
+        UserType = #{userType,jdbcType=TINYINT},
+      </if>
+      <if test="phoneNumber != null" >
+        PhoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="emailAddress != null" >
+        EmailAddress = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="validataCode != null" >
+        ValidataCode = #{validataCode,jdbcType=VARCHAR},
+      </if>
+      <if test="outDate != null" >
+        OutDate = #{outDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UserId = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Userinfo" >
+    update userinfo
+    set UserName = #{userName,jdbcType=VARCHAR},
+      UserPwd = #{userPwd,jdbcType=CHAR},
+      UserType = #{userType,jdbcType=TINYINT},
+      PhoneNumber = #{phoneNumber,jdbcType=VARCHAR},
+      EmailAddress = #{emailAddress,jdbcType=VARCHAR},
+      ValidataCode = #{validataCode,jdbcType=VARCHAR},
+      OutDate = #{outDate,jdbcType=TIMESTAMP}
+    where UserId = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

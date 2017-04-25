@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.TeachplanManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Teachplan" >
+    <id column="TeachPlanId" property="teachPlanId" jdbcType="VARCHAR" />
+    <result column="CourseId" property="courseId" jdbcType="CHAR" />
+    <result column="CourseTypeId" property="courseTypeId" jdbcType="TINYINT" />
+    <result column="GradeId" property="gradeId" jdbcType="VARCHAR" />
+    <result column="CourseName" property="courseName" jdbcType="VARCHAR" />
+    <result column="TotalHours" property="totalHours" jdbcType="SMALLINT" />
+    <result column="TheoryHours" property="theoryHours" jdbcType="SMALLINT" />
+    <result column="PracticeHours" property="practiceHours" jdbcType="SMALLINT" />
+    <result column="SchoolYearType" property="schoolYearType" jdbcType="TINYINT" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    TeachPlanId, CourseId, CourseTypeId, GradeId, CourseName, TotalHours, TheoryHours, 
+    PracticeHours, SchoolYearType
+  </sql>
+  
+  <select id="selectByCourseName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from teachplan
+    where CourseName = #{courseName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCourseNameByCourseId" resultType="java.lang.String" parameterType="java.lang.String" >
+    select CourseName
+    from teachplan
+    where CourseId = #{courseId,jdbcType=CHAR}
+  </select>
+  <select id="selectYearTypeById" resultType="java.lang.Byte" parameterType="java.lang.String" >
+    select SchoolYearType
+    from teachplan
+    where CourseId = #{courseId,jdbcType=CHAR}
+  </select>
+</mapper>

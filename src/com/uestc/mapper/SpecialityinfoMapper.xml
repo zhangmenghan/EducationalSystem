@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.SpecialityinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Specialityinfo" >
+    <id column="SpecialityId" property="specialityId" jdbcType="VARCHAR" />
+    <result column="SpecialityName" property="specialityName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.uestc.model.Specialityinfo" extends="BaseResultMap" >
+    <result column="SpecialityIntro" property="specialityIntro" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    SpecialityId, SpecialityName
+  </sql>
+  <sql id="Blob_Column_List" >
+    SpecialityIntro
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.uestc.model.SpecialityinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from specialityinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.SpecialityinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from specialityinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from specialityinfo
+    where SpecialityId = #{specialityId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from specialityinfo
+    where SpecialityId = #{specialityId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.SpecialityinfoExample" >
+    delete from specialityinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Specialityinfo" >
+    insert into specialityinfo (SpecialityId, SpecialityName, SpecialityIntro
+      )
+    values (#{specialityId,jdbcType=VARCHAR}, #{specialityName,jdbcType=VARCHAR}, #{specialityIntro,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Specialityinfo" >
+    insert into specialityinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="specialityId != null" >
+        SpecialityId,
+      </if>
+      <if test="specialityName != null" >
+        SpecialityName,
+      </if>
+      <if test="specialityIntro != null" >
+        SpecialityIntro,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="specialityId != null" >
+        #{specialityId,jdbcType=VARCHAR},
+      </if>
+      <if test="specialityName != null" >
+        #{specialityName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialityIntro != null" >
+        #{specialityIntro,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.SpecialityinfoExample" resultType="java.lang.Integer" >
+    select count(*) from specialityinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update specialityinfo
+    <set >
+      <if test="record.specialityId != null" >
+        SpecialityId = #{record.specialityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialityName != null" >
+        SpecialityName = #{record.specialityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialityIntro != null" >
+        SpecialityIntro = #{record.specialityIntro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update specialityinfo
+    set SpecialityId = #{record.specialityId,jdbcType=VARCHAR},
+      SpecialityName = #{record.specialityName,jdbcType=VARCHAR},
+      SpecialityIntro = #{record.specialityIntro,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update specialityinfo
+    set SpecialityId = #{record.specialityId,jdbcType=VARCHAR},
+      SpecialityName = #{record.specialityName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Specialityinfo" >
+    update specialityinfo
+    <set >
+      <if test="specialityName != null" >
+        SpecialityName = #{specialityName,jdbcType=VARCHAR},
+      </if>
+      <if test="specialityIntro != null" >
+        SpecialityIntro = #{specialityIntro,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where SpecialityId = #{specialityId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.uestc.model.Specialityinfo" >
+    update specialityinfo
+    set SpecialityName = #{specialityName,jdbcType=VARCHAR},
+      SpecialityIntro = #{specialityIntro,jdbcType=LONGVARCHAR}
+    where SpecialityId = #{specialityId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Specialityinfo" >
+    update specialityinfo
+    set SpecialityName = #{specialityName,jdbcType=VARCHAR}
+    where SpecialityId = #{specialityId,jdbcType=VARCHAR}
+  </update>
+</mapper>

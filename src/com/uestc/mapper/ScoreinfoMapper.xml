@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.ScoreinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Scoreinfo" >
+    <id column="ScoreId" property="scoreId" jdbcType="VARCHAR" />
+    <result column="CourseAssociationId" property="courseAssociationId" jdbcType="VARCHAR" />
+    <result column="StudentId" property="studentId" jdbcType="VARCHAR" />
+    <result column="UsuallyGrade" property="usuallyGrade" jdbcType="REAL" />
+    <result column="PracticeGrade" property="practiceGrade" jdbcType="REAL" />
+    <result column="HalfGrade" property="halfGrade" jdbcType="REAL" />
+    <result column="FinalExamGrade" property="finalExamGrade" jdbcType="REAL" />
+    <result column="FinalGrade" property="finalGrade" jdbcType="REAL" />
+    <result column="EndGrade" property="endGrade" jdbcType="REAL" />
+    <result column="MakeupGrade" property="makeupGrade" jdbcType="REAL" />
+    <result column="MakeupExamNum" property="makeupExamNum" jdbcType="TINYINT" />
+    <result column="ApplyMakeup" property="applyMakeup" jdbcType="TINYINT" />
+    <result column="MakeupApplyTime" property="makeupApplyTime" jdbcType="TIMESTAMP" />
+    <result column="Remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ScoreId, CourseAssociationId, StudentId, UsuallyGrade, PracticeGrade, HalfGrade, 
+    FinalExamGrade, FinalGrade, EndGrade, MakeupGrade, MakeupExamNum, ApplyMakeup, MakeupApplyTime, 
+    Remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.ScoreinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scoreinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from scoreinfo
+    where ScoreId = #{scoreId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from scoreinfo
+    where ScoreId = #{scoreId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.ScoreinfoExample" >
+    delete from scoreinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Scoreinfo" >
+    insert into scoreinfo (ScoreId, CourseAssociationId, StudentId, 
+      UsuallyGrade, PracticeGrade, HalfGrade, 
+      FinalExamGrade, FinalGrade, EndGrade, 
+      MakeupGrade, MakeupExamNum, ApplyMakeup, 
+      MakeupApplyTime, Remark)
+    values (#{scoreId,jdbcType=VARCHAR}, #{courseAssociationId,jdbcType=VARCHAR}, #{studentId,jdbcType=VARCHAR}, 
+      #{usuallyGrade,jdbcType=REAL}, #{practiceGrade,jdbcType=REAL}, #{halfGrade,jdbcType=REAL}, 
+      #{finalExamGrade,jdbcType=REAL}, #{finalGrade,jdbcType=REAL}, #{endGrade,jdbcType=REAL}, 
+      #{makeupGrade,jdbcType=REAL}, #{makeupExamNum,jdbcType=TINYINT}, #{applyMakeup,jdbcType=TINYINT}, 
+      #{makeupApplyTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Scoreinfo" >
+    insert into scoreinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scoreId != null" >
+        ScoreId,
+      </if>
+      <if test="courseAssociationId != null" >
+        CourseAssociationId,
+      </if>
+      <if test="studentId != null" >
+        StudentId,
+      </if>
+      <if test="usuallyGrade != null" >
+        UsuallyGrade,
+      </if>
+      <if test="practiceGrade != null" >
+        PracticeGrade,
+      </if>
+      <if test="halfGrade != null" >
+        HalfGrade,
+      </if>
+      <if test="finalExamGrade != null" >
+        FinalExamGrade,
+      </if>
+      <if test="finalGrade != null" >
+        FinalGrade,
+      </if>
+      <if test="endGrade != null" >
+        EndGrade,
+      </if>
+      <if test="makeupGrade != null" >
+        MakeupGrade,
+      </if>
+      <if test="makeupExamNum != null" >
+        MakeupExamNum,
+      </if>
+      <if test="applyMakeup != null" >
+        ApplyMakeup,
+      </if>
+      <if test="makeupApplyTime != null" >
+        MakeupApplyTime,
+      </if>
+      <if test="remark != null" >
+        Remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scoreId != null" >
+        #{scoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="courseAssociationId != null" >
+        #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="usuallyGrade != null" >
+        #{usuallyGrade,jdbcType=REAL},
+      </if>
+      <if test="practiceGrade != null" >
+        #{practiceGrade,jdbcType=REAL},
+      </if>
+      <if test="halfGrade != null" >
+        #{halfGrade,jdbcType=REAL},
+      </if>
+      <if test="finalExamGrade != null" >
+        #{finalExamGrade,jdbcType=REAL},
+      </if>
+      <if test="finalGrade != null" >
+        #{finalGrade,jdbcType=REAL},
+      </if>
+      <if test="endGrade != null" >
+        #{endGrade,jdbcType=REAL},
+      </if>
+      <if test="makeupGrade != null" >
+        #{makeupGrade,jdbcType=REAL},
+      </if>
+      <if test="makeupExamNum != null" >
+        #{makeupExamNum,jdbcType=TINYINT},
+      </if>
+      <if test="applyMakeup != null" >
+        #{applyMakeup,jdbcType=TINYINT},
+      </if>
+      <if test="makeupApplyTime != null" >
+        #{makeupApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.ScoreinfoExample" resultType="java.lang.Integer" >
+    select count(*) from scoreinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update scoreinfo
+    <set >
+      <if test="record.scoreId != null" >
+        ScoreId = #{record.scoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.courseAssociationId != null" >
+        CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentId != null" >
+        StudentId = #{record.studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usuallyGrade != null" >
+        UsuallyGrade = #{record.usuallyGrade,jdbcType=REAL},
+      </if>
+      <if test="record.practiceGrade != null" >
+        PracticeGrade = #{record.practiceGrade,jdbcType=REAL},
+      </if>
+      <if test="record.halfGrade != null" >
+        HalfGrade = #{record.halfGrade,jdbcType=REAL},
+      </if>
+      <if test="record.finalExamGrade != null" >
+        FinalExamGrade = #{record.finalExamGrade,jdbcType=REAL},
+      </if>
+      <if test="record.finalGrade != null" >
+        FinalGrade = #{record.finalGrade,jdbcType=REAL},
+      </if>
+      <if test="record.endGrade != null" >
+        EndGrade = #{record.endGrade,jdbcType=REAL},
+      </if>
+      <if test="record.makeupGrade != null" >
+        MakeupGrade = #{record.makeupGrade,jdbcType=REAL},
+      </if>
+      <if test="record.makeupExamNum != null" >
+        MakeupExamNum = #{record.makeupExamNum,jdbcType=TINYINT},
+      </if>
+      <if test="record.applyMakeup != null" >
+        ApplyMakeup = #{record.applyMakeup,jdbcType=TINYINT},
+      </if>
+      <if test="record.makeupApplyTime != null" >
+        MakeupApplyTime = #{record.makeupApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remark != null" >
+        Remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update scoreinfo
+    set ScoreId = #{record.scoreId,jdbcType=VARCHAR},
+      CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      StudentId = #{record.studentId,jdbcType=VARCHAR},
+      UsuallyGrade = #{record.usuallyGrade,jdbcType=REAL},
+      PracticeGrade = #{record.practiceGrade,jdbcType=REAL},
+      HalfGrade = #{record.halfGrade,jdbcType=REAL},
+      FinalExamGrade = #{record.finalExamGrade,jdbcType=REAL},
+      FinalGrade = #{record.finalGrade,jdbcType=REAL},
+      EndGrade = #{record.endGrade,jdbcType=REAL},
+      MakeupGrade = #{record.makeupGrade,jdbcType=REAL},
+      MakeupExamNum = #{record.makeupExamNum,jdbcType=TINYINT},
+      ApplyMakeup = #{record.applyMakeup,jdbcType=TINYINT},
+      MakeupApplyTime = #{record.makeupApplyTime,jdbcType=TIMESTAMP},
+      Remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Scoreinfo" >
+    update scoreinfo
+    <set >
+      <if test="courseAssociationId != null" >
+        CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentId != null" >
+        StudentId = #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="usuallyGrade != null" >
+        UsuallyGrade = #{usuallyGrade,jdbcType=REAL},
+      </if>
+      <if test="practiceGrade != null" >
+        PracticeGrade = #{practiceGrade,jdbcType=REAL},
+      </if>
+      <if test="halfGrade != null" >
+        HalfGrade = #{halfGrade,jdbcType=REAL},
+      </if>
+      <if test="finalExamGrade != null" >
+        FinalExamGrade = #{finalExamGrade,jdbcType=REAL},
+      </if>
+      <if test="finalGrade != null" >
+        FinalGrade = #{finalGrade,jdbcType=REAL},
+      </if>
+      <if test="endGrade != null" >
+        EndGrade = #{endGrade,jdbcType=REAL},
+      </if>
+      <if test="makeupGrade != null" >
+        MakeupGrade = #{makeupGrade,jdbcType=REAL},
+      </if>
+      <if test="makeupExamNum != null" >
+        MakeupExamNum = #{makeupExamNum,jdbcType=TINYINT},
+      </if>
+      <if test="applyMakeup != null" >
+        ApplyMakeup = #{applyMakeup,jdbcType=TINYINT},
+      </if>
+      <if test="makeupApplyTime != null" >
+        MakeupApplyTime = #{makeupApplyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        Remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ScoreId = #{scoreId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Scoreinfo" >
+    update scoreinfo
+    set CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR},
+      StudentId = #{studentId,jdbcType=VARCHAR},
+      UsuallyGrade = #{usuallyGrade,jdbcType=REAL},
+      PracticeGrade = #{practiceGrade,jdbcType=REAL},
+      HalfGrade = #{halfGrade,jdbcType=REAL},
+      FinalExamGrade = #{finalExamGrade,jdbcType=REAL},
+      FinalGrade = #{finalGrade,jdbcType=REAL},
+      EndGrade = #{endGrade,jdbcType=REAL},
+      MakeupGrade = #{makeupGrade,jdbcType=REAL},
+      MakeupExamNum = #{makeupExamNum,jdbcType=TINYINT},
+      ApplyMakeup = #{applyMakeup,jdbcType=TINYINT},
+      MakeupApplyTime = #{makeupApplyTime,jdbcType=TIMESTAMP},
+      Remark = #{remark,jdbcType=VARCHAR}
+    where ScoreId = #{scoreId,jdbcType=VARCHAR}
+  </update>
+</mapper>

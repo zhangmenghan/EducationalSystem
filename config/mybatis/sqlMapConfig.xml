@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org/DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<!-- 全局setting配置 ，根据需要再添加-->
+
+    <!-- 配置别名 -->
+    <typeAliases>
+        <!-- 批量扫描别名 -->
+        <package name="com.uestc.model"/>
+        <package name="com.uestc.newmodel"/>
+    </typeAliases>
+
+    <!-- 配置mapper
+     由于使用spring和mybatis的整合包进行整合，这了无需配置
+     但必须遵循：mapper.xml和mapper.java文件同名且在同一目录-->
+    <!--<mappers></mappers>  -->
+</configuration>

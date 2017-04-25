@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.ClassinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Classinfo" >
+    <id column="ClassId" property="classId" jdbcType="VARCHAR" />
+    <result column="SpecialityId" property="specialityId" jdbcType="VARCHAR" />
+    <result column="GradeId" property="gradeId" jdbcType="VARCHAR" />
+    <result column="ClassTeacherId" property="classTeacherId" jdbcType="CHAR" />
+    <result column="StudyMode" property="studyMode" jdbcType="VARCHAR" />
+    <result column="ClassName" property="className" jdbcType="VARCHAR" />
+    <result column="ClassSize" property="classSize" jdbcType="TINYINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ClassId, SpecialityId, GradeId, ClassTeacherId, StudyMode, ClassName, ClassSize
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.ClassinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from classinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from classinfo
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.ClassinfoExample" >
+    delete from classinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Classinfo" >
+    insert into classinfo (ClassId, SpecialityId, GradeId, 
+      ClassTeacherId, StudyMode, ClassName, 
+      ClassSize)
+    values (#{classId,jdbcType=VARCHAR}, #{specialityId,jdbcType=VARCHAR}, #{gradeId,jdbcType=VARCHAR}, 
+      #{classTeacherId,jdbcType=CHAR}, #{studyMode,jdbcType=VARCHAR}, #{className,jdbcType=VARCHAR}, 
+      #{classSize,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Classinfo" >
+    insert into classinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        ClassId,
+      </if>
+      <if test="specialityId != null" >
+        SpecialityId,
+      </if>
+      <if test="gradeId != null" >
+        GradeId,
+      </if>
+      <if test="classTeacherId != null" >
+        ClassTeacherId,
+      </if>
+      <if test="studyMode != null" >
+        StudyMode,
+      </if>
+      <if test="className != null" >
+        ClassName,
+      </if>
+      <if test="classSize != null" >
+        ClassSize,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="specialityId != null" >
+        #{specialityId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null" >
+        #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="classTeacherId != null" >
+        #{classTeacherId,jdbcType=CHAR},
+      </if>
+      <if test="studyMode != null" >
+        #{studyMode,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classSize != null" >
+        #{classSize,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.ClassinfoExample" resultType="java.lang.Integer" >
+    select count(*) from classinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update classinfo
+    <set >
+      <if test="record.classId != null" >
+        ClassId = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.specialityId != null" >
+        SpecialityId = #{record.specialityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gradeId != null" >
+        GradeId = #{record.gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classTeacherId != null" >
+        ClassTeacherId = #{record.classTeacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.studyMode != null" >
+        StudyMode = #{record.studyMode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.className != null" >
+        ClassName = #{record.className,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classSize != null" >
+        ClassSize = #{record.classSize,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update classinfo
+    set ClassId = #{record.classId,jdbcType=VARCHAR},
+      SpecialityId = #{record.specialityId,jdbcType=VARCHAR},
+      GradeId = #{record.gradeId,jdbcType=VARCHAR},
+      ClassTeacherId = #{record.classTeacherId,jdbcType=CHAR},
+      StudyMode = #{record.studyMode,jdbcType=VARCHAR},
+      ClassName = #{record.className,jdbcType=VARCHAR},
+      ClassSize = #{record.classSize,jdbcType=TINYINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Classinfo" >
+    update classinfo
+    <set >
+      <if test="specialityId != null" >
+        SpecialityId = #{specialityId,jdbcType=VARCHAR},
+      </if>
+      <if test="gradeId != null" >
+        GradeId = #{gradeId,jdbcType=VARCHAR},
+      </if>
+      <if test="classTeacherId != null" >
+        ClassTeacherId = #{classTeacherId,jdbcType=CHAR},
+      </if>
+      <if test="studyMode != null" >
+        StudyMode = #{studyMode,jdbcType=VARCHAR},
+      </if>
+      <if test="className != null" >
+        ClassName = #{className,jdbcType=VARCHAR},
+      </if>
+      <if test="classSize != null" >
+        ClassSize = #{classSize,jdbcType=TINYINT},
+      </if>
+    </set>
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Classinfo" >
+    update classinfo
+    set SpecialityId = #{specialityId,jdbcType=VARCHAR},
+      GradeId = #{gradeId,jdbcType=VARCHAR},
+      ClassTeacherId = #{classTeacherId,jdbcType=CHAR},
+      StudyMode = #{studyMode,jdbcType=VARCHAR},
+      ClassName = #{className,jdbcType=VARCHAR},
+      ClassSize = #{classSize,jdbcType=TINYINT}
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </update>
+</mapper>

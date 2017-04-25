@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.LessonschangeMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Lessonschange" >
+    <id column="LessonsChangeId" property="lessonsChangeId" jdbcType="VARCHAR" />
+    <result column="GiveLessonsDetailsId" property="giveLessonsDetailsId" jdbcType="VARCHAR" />
+    <result column="ChangeType" property="changeType" jdbcType="TINYINT" />
+    <result column="ApplicationTime" property="applicationTime" jdbcType="TIMESTAMP" />
+    <result column="Mediator" property="mediator" jdbcType="CHAR" />
+    <result column="MediationReason" property="mediationReason" jdbcType="VARCHAR" />
+    <result column="Confirmor" property="confirmor" jdbcType="CHAR" />
+    <result column="AuditType" property="auditType" jdbcType="TINYINT" />
+    <result column="ExecWeek" property="execWeek" jdbcType="TINYINT" />
+    <result column="UseClassroom" property="useClassroom" jdbcType="VARCHAR" />
+    <result column="LessonsChangeInfo" property="lessonsChangeInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    LessonsChangeId, GiveLessonsDetailsId, ChangeType, ApplicationTime, Mediator, MediationReason, 
+    Confirmor, AuditType, ExecWeek, UseClassroom, LessonsChangeInfo
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.LessonschangeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from lessonschange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from lessonschange
+    where LessonsChangeId = #{lessonsChangeId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from lessonschange
+    where LessonsChangeId = #{lessonsChangeId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.LessonschangeExample" >
+    delete from lessonschange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Lessonschange" >
+    insert into lessonschange (LessonsChangeId, GiveLessonsDetailsId, 
+      ChangeType, ApplicationTime, Mediator, 
+      MediationReason, Confirmor, AuditType, 
+      ExecWeek, UseClassroom, LessonsChangeInfo
+      )
+    values (#{lessonsChangeId,jdbcType=VARCHAR}, #{giveLessonsDetailsId,jdbcType=VARCHAR}, 
+      #{changeType,jdbcType=TINYINT}, #{applicationTime,jdbcType=TIMESTAMP}, #{mediator,jdbcType=CHAR}, 
+      #{mediationReason,jdbcType=VARCHAR}, #{confirmor,jdbcType=CHAR}, #{auditType,jdbcType=TINYINT}, 
+      #{execWeek,jdbcType=TINYINT}, #{useClassroom,jdbcType=VARCHAR}, #{lessonsChangeInfo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Lessonschange" >
+    insert into lessonschange
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lessonsChangeId != null" >
+        LessonsChangeId,
+      </if>
+      <if test="giveLessonsDetailsId != null" >
+        GiveLessonsDetailsId,
+      </if>
+      <if test="changeType != null" >
+        ChangeType,
+      </if>
+      <if test="applicationTime != null" >
+        ApplicationTime,
+      </if>
+      <if test="mediator != null" >
+        Mediator,
+      </if>
+      <if test="mediationReason != null" >
+        MediationReason,
+      </if>
+      <if test="confirmor != null" >
+        Confirmor,
+      </if>
+      <if test="auditType != null" >
+        AuditType,
+      </if>
+      <if test="execWeek != null" >
+        ExecWeek,
+      </if>
+      <if test="useClassroom != null" >
+        UseClassroom,
+      </if>
+      <if test="lessonsChangeInfo != null" >
+        LessonsChangeInfo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lessonsChangeId != null" >
+        #{lessonsChangeId,jdbcType=VARCHAR},
+      </if>
+      <if test="giveLessonsDetailsId != null" >
+        #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="changeType != null" >
+        #{changeType,jdbcType=TINYINT},
+      </if>
+      <if test="applicationTime != null" >
+        #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediator != null" >
+        #{mediator,jdbcType=CHAR},
+      </if>
+      <if test="mediationReason != null" >
+        #{mediationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmor != null" >
+        #{confirmor,jdbcType=CHAR},
+      </if>
+      <if test="auditType != null" >
+        #{auditType,jdbcType=TINYINT},
+      </if>
+      <if test="execWeek != null" >
+        #{execWeek,jdbcType=TINYINT},
+      </if>
+      <if test="useClassroom != null" >
+        #{useClassroom,jdbcType=VARCHAR},
+      </if>
+      <if test="lessonsChangeInfo != null" >
+        #{lessonsChangeInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.LessonschangeExample" resultType="java.lang.Integer" >
+    select count(*) from lessonschange
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update lessonschange
+    <set >
+      <if test="record.lessonsChangeId != null" >
+        LessonsChangeId = #{record.lessonsChangeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveLessonsDetailsId != null" >
+        GiveLessonsDetailsId = #{record.giveLessonsDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.changeType != null" >
+        ChangeType = #{record.changeType,jdbcType=TINYINT},
+      </if>
+      <if test="record.applicationTime != null" >
+        ApplicationTime = #{record.applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mediator != null" >
+        Mediator = #{record.mediator,jdbcType=CHAR},
+      </if>
+      <if test="record.mediationReason != null" >
+        MediationReason = #{record.mediationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmor != null" >
+        Confirmor = #{record.confirmor,jdbcType=CHAR},
+      </if>
+      <if test="record.auditType != null" >
+        AuditType = #{record.auditType,jdbcType=TINYINT},
+      </if>
+      <if test="record.execWeek != null" >
+        ExecWeek = #{record.execWeek,jdbcType=TINYINT},
+      </if>
+      <if test="record.useClassroom != null" >
+        UseClassroom = #{record.useClassroom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lessonsChangeInfo != null" >
+        LessonsChangeInfo = #{record.lessonsChangeInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update lessonschange
+    set LessonsChangeId = #{record.lessonsChangeId,jdbcType=VARCHAR},
+      GiveLessonsDetailsId = #{record.giveLessonsDetailsId,jdbcType=VARCHAR},
+      ChangeType = #{record.changeType,jdbcType=TINYINT},
+      ApplicationTime = #{record.applicationTime,jdbcType=TIMESTAMP},
+      Mediator = #{record.mediator,jdbcType=CHAR},
+      MediationReason = #{record.mediationReason,jdbcType=VARCHAR},
+      Confirmor = #{record.confirmor,jdbcType=CHAR},
+      AuditType = #{record.auditType,jdbcType=TINYINT},
+      ExecWeek = #{record.execWeek,jdbcType=TINYINT},
+      UseClassroom = #{record.useClassroom,jdbcType=VARCHAR},
+      LessonsChangeInfo = #{record.lessonsChangeInfo,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Lessonschange" >
+    update lessonschange
+    <set >
+      <if test="giveLessonsDetailsId != null" >
+        GiveLessonsDetailsId = #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      </if>
+      <if test="changeType != null" >
+        ChangeType = #{changeType,jdbcType=TINYINT},
+      </if>
+      <if test="applicationTime != null" >
+        ApplicationTime = #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mediator != null" >
+        Mediator = #{mediator,jdbcType=CHAR},
+      </if>
+      <if test="mediationReason != null" >
+        MediationReason = #{mediationReason,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmor != null" >
+        Confirmor = #{confirmor,jdbcType=CHAR},
+      </if>
+      <if test="auditType != null" >
+        AuditType = #{auditType,jdbcType=TINYINT},
+      </if>
+      <if test="execWeek != null" >
+        ExecWeek = #{execWeek,jdbcType=TINYINT},
+      </if>
+      <if test="useClassroom != null" >
+        UseClassroom = #{useClassroom,jdbcType=VARCHAR},
+      </if>
+      <if test="lessonsChangeInfo != null" >
+        LessonsChangeInfo = #{lessonsChangeInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LessonsChangeId = #{lessonsChangeId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Lessonschange" >
+    update lessonschange
+    set GiveLessonsDetailsId = #{giveLessonsDetailsId,jdbcType=VARCHAR},
+      ChangeType = #{changeType,jdbcType=TINYINT},
+      ApplicationTime = #{applicationTime,jdbcType=TIMESTAMP},
+      Mediator = #{mediator,jdbcType=CHAR},
+      MediationReason = #{mediationReason,jdbcType=VARCHAR},
+      Confirmor = #{confirmor,jdbcType=CHAR},
+      AuditType = #{auditType,jdbcType=TINYINT},
+      ExecWeek = #{execWeek,jdbcType=TINYINT},
+      UseClassroom = #{useClassroom,jdbcType=VARCHAR},
+      LessonsChangeInfo = #{lessonsChangeInfo,jdbcType=VARCHAR}
+    where LessonsChangeId = #{lessonsChangeId,jdbcType=VARCHAR}
+  </update>
+</mapper>

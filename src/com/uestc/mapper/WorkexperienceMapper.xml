@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.WorkexperienceMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Workexperience" >
+    <id column="WorkExperienceId" property="workExperienceId" jdbcType="INTEGER" />
+    <result column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="ClinicWorkUnit" property="clinicWorkUnit" jdbcType="VARCHAR" />
+    <result column="WorkPost" property="workPost" jdbcType="VARCHAR" />
+    <result column="StartTime" property="startTime" jdbcType="DATE" />
+    <result column="EndTime" property="endTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    WorkExperienceId, TeacherId, ClinicWorkUnit, WorkPost, StartTime, EndTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.WorkexperienceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from workexperience
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from workexperience
+    where WorkExperienceId = #{workExperienceId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from workexperience
+    where WorkExperienceId = #{workExperienceId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.WorkexperienceExample" >
+    delete from workexperience
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Workexperience" >
+    insert into workexperience (WorkExperienceId, TeacherId, ClinicWorkUnit, 
+      WorkPost, StartTime, EndTime
+      )
+    values (#{workExperienceId,jdbcType=INTEGER}, #{teacherId,jdbcType=CHAR}, #{clinicWorkUnit,jdbcType=VARCHAR}, 
+      #{workPost,jdbcType=VARCHAR}, #{startTime,jdbcType=DATE}, #{endTime,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Workexperience" >
+    insert into workexperience
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="workExperienceId != null" >
+        WorkExperienceId,
+      </if>
+      <if test="teacherId != null" >
+        TeacherId,
+      </if>
+      <if test="clinicWorkUnit != null" >
+        ClinicWorkUnit,
+      </if>
+      <if test="workPost != null" >
+        WorkPost,
+      </if>
+      <if test="startTime != null" >
+        StartTime,
+      </if>
+      <if test="endTime != null" >
+        EndTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="workExperienceId != null" >
+        #{workExperienceId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="clinicWorkUnit != null" >
+        #{clinicWorkUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="workPost != null" >
+        #{workPost,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.WorkexperienceExample" resultType="java.lang.Integer" >
+    select count(*) from workexperience
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update workexperience
+    <set >
+      <if test="record.workExperienceId != null" >
+        WorkExperienceId = #{record.workExperienceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        TeacherId = #{record.teacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.clinicWorkUnit != null" >
+        ClinicWorkUnit = #{record.clinicWorkUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workPost != null" >
+        WorkPost = #{record.workPost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null" >
+        StartTime = #{record.startTime,jdbcType=DATE},
+      </if>
+      <if test="record.endTime != null" >
+        EndTime = #{record.endTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update workexperience
+    set WorkExperienceId = #{record.workExperienceId,jdbcType=INTEGER},
+      TeacherId = #{record.teacherId,jdbcType=CHAR},
+      ClinicWorkUnit = #{record.clinicWorkUnit,jdbcType=VARCHAR},
+      WorkPost = #{record.workPost,jdbcType=VARCHAR},
+      StartTime = #{record.startTime,jdbcType=DATE},
+      EndTime = #{record.endTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Workexperience" >
+    update workexperience
+    <set >
+      <if test="teacherId != null" >
+        TeacherId = #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="clinicWorkUnit != null" >
+        ClinicWorkUnit = #{clinicWorkUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="workPost != null" >
+        WorkPost = #{workPost,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        StartTime = #{startTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null" >
+        EndTime = #{endTime,jdbcType=DATE},
+      </if>
+    </set>
+    where WorkExperienceId = #{workExperienceId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Workexperience" >
+    update workexperience
+    set TeacherId = #{teacherId,jdbcType=CHAR},
+      ClinicWorkUnit = #{clinicWorkUnit,jdbcType=VARCHAR},
+      WorkPost = #{workPost,jdbcType=VARCHAR},
+      StartTime = #{startTime,jdbcType=DATE},
+      EndTime = #{endTime,jdbcType=DATE}
+    where WorkExperienceId = #{workExperienceId,jdbcType=INTEGER}
+  </update>
+</mapper>

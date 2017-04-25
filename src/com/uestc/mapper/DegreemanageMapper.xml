@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.DegreemanageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Degreemanage" >
+    <id column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="GraduateSchool" property="graduateSchool" jdbcType="VARCHAR" />
+    <result column="Secialty" property="secialty" jdbcType="VARCHAR" />
+    <result column="SchoolSystem" property="schoolSystem" jdbcType="TINYINT" />
+    <result column="HighestEDU" property="highestEDU" jdbcType="VARCHAR" />
+    <result column="HighestDegree" property="highestDegree" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    TeacherId, GraduateSchool, Secialty, SchoolSystem, HighestEDU, HighestDegree
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.DegreemanageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from degreemanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from degreemanage
+    where TeacherId = #{teacherId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from degreemanage
+    where TeacherId = #{teacherId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.DegreemanageExample" >
+    delete from degreemanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Degreemanage" >
+    insert into degreemanage (TeacherId, GraduateSchool, Secialty, 
+      SchoolSystem, HighestEDU, HighestDegree
+      )
+    values (#{teacherId,jdbcType=CHAR}, #{graduateSchool,jdbcType=VARCHAR}, #{secialty,jdbcType=VARCHAR}, 
+      #{schoolSystem,jdbcType=TINYINT}, #{highestEDU,jdbcType=VARCHAR}, #{highestDegree,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Degreemanage" >
+    insert into degreemanage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="teacherId != null" >
+        TeacherId,
+      </if>
+      <if test="graduateSchool != null" >
+        GraduateSchool,
+      </if>
+      <if test="secialty != null" >
+        Secialty,
+      </if>
+      <if test="schoolSystem != null" >
+        SchoolSystem,
+      </if>
+      <if test="highestEDU != null" >
+        HighestEDU,
+      </if>
+      <if test="highestDegree != null" >
+        HighestDegree,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="graduateSchool != null" >
+        #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="secialty != null" >
+        #{secialty,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolSystem != null" >
+        #{schoolSystem,jdbcType=TINYINT},
+      </if>
+      <if test="highestEDU != null" >
+        #{highestEDU,jdbcType=VARCHAR},
+      </if>
+      <if test="highestDegree != null" >
+        #{highestDegree,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.DegreemanageExample" resultType="java.lang.Integer" >
+    select count(*) from degreemanage
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update degreemanage
+    <set >
+      <if test="record.teacherId != null" >
+        TeacherId = #{record.teacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.graduateSchool != null" >
+        GraduateSchool = #{record.graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secialty != null" >
+        Secialty = #{record.secialty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolSystem != null" >
+        SchoolSystem = #{record.schoolSystem,jdbcType=TINYINT},
+      </if>
+      <if test="record.highestEDU != null" >
+        HighestEDU = #{record.highestEDU,jdbcType=VARCHAR},
+      </if>
+      <if test="record.highestDegree != null" >
+        HighestDegree = #{record.highestDegree,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update degreemanage
+    set TeacherId = #{record.teacherId,jdbcType=CHAR},
+      GraduateSchool = #{record.graduateSchool,jdbcType=VARCHAR},
+      Secialty = #{record.secialty,jdbcType=VARCHAR},
+      SchoolSystem = #{record.schoolSystem,jdbcType=TINYINT},
+      HighestEDU = #{record.highestEDU,jdbcType=VARCHAR},
+      HighestDegree = #{record.highestDegree,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Degreemanage" >
+    update degreemanage
+    <set >
+      <if test="graduateSchool != null" >
+        GraduateSchool = #{graduateSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="secialty != null" >
+        Secialty = #{secialty,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolSystem != null" >
+        SchoolSystem = #{schoolSystem,jdbcType=TINYINT},
+      </if>
+      <if test="highestEDU != null" >
+        HighestEDU = #{highestEDU,jdbcType=VARCHAR},
+      </if>
+      <if test="highestDegree != null" >
+        HighestDegree = #{highestDegree,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where TeacherId = #{teacherId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Degreemanage" >
+    update degreemanage
+    set GraduateSchool = #{graduateSchool,jdbcType=VARCHAR},
+      Secialty = #{secialty,jdbcType=VARCHAR},
+      SchoolSystem = #{schoolSystem,jdbcType=TINYINT},
+      HighestEDU = #{highestEDU,jdbcType=VARCHAR},
+      HighestDegree = #{highestDegree,jdbcType=VARCHAR}
+    where TeacherId = #{teacherId,jdbcType=CHAR}
+  </update>
+</mapper>

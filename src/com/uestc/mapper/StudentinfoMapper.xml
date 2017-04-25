@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.StudentinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Studentinfo" >
+    <id column="StudentId" property="studentId" jdbcType="VARCHAR" />
+    <result column="StudentIDcard" property="studentIDcard" jdbcType="CHAR" />
+    <result column="StudentName" property="studentName" jdbcType="VARCHAR" />
+    <result column="FormerName" property="formerName" jdbcType="VARCHAR" />
+    <result column="StudentGender" property="studentGender" jdbcType="TINYINT" />
+    <result column="CurrentState" property="currentState" jdbcType="TINYINT" />
+    <result column="Birthdate" property="birthdate" jdbcType="DATE" />
+    <result column="AdmissionDate" property="admissionDate" jdbcType="DATE" />
+    <result column="MaritalStatus" property="maritalStatus" jdbcType="TINYINT" />
+    <result column="NativePlace" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="SchoolYearType" property="schoolYearType" jdbcType="TINYINT" />
+    <result column="SchoolLevel" property="schoolLevel" jdbcType="TINYINT" />
+    <result column="EntranceScores" property="entranceScores" jdbcType="REAL" />
+    <result column="NCEERegistrationId" property="NCEERegistrationId" jdbcType="VARCHAR" />
+    <result column="OriginOfStudent" property="originOfStudent" jdbcType="VARCHAR" />
+    <result column="HomeTelephone" property="homeTelephone" jdbcType="VARCHAR" />
+    <result column="HouseAddress" property="houseAddress" jdbcType="VARCHAR" />
+    <result column="Height" property="height" jdbcType="SMALLINT" />
+    <result column="Weight" property="weight" jdbcType="SMALLINT" />
+    <result column="ClassID" property="classID" jdbcType="VARCHAR" />
+    <result column="ClassDuty" property="classDuty" jdbcType="VARCHAR" />
+    <result column="Ethno" property="ethno" jdbcType="VARCHAR" />
+    <result column="PoliticalStatus" property="politicalStatus" jdbcType="VARCHAR" />
+    <result column="LiteracyLevels" property="literacyLevels" jdbcType="VARCHAR" />
+    <result column="GraduationTime" property="graduationTime" jdbcType="DATE" />
+    <result column="GraduationNum" property="graduationNum" jdbcType="VARCHAR" />
+    <result column="ExamineeId" property="examineeId" jdbcType="VARCHAR" />
+    <result column="CredentialsPhoto" property="credentialsPhoto" jdbcType="VARCHAR" />
+    <result column="LivePhoto" property="livePhoto" jdbcType="VARCHAR" />
+    <result column="IDcardPhoto" property="IDcardPhoto" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    StudentId, StudentIDcard, StudentName, FormerName, StudentGender, CurrentState, Birthdate, 
+    AdmissionDate, MaritalStatus, NativePlace, SchoolYearType, SchoolLevel, EntranceScores, 
+    NCEERegistrationId, OriginOfStudent, HomeTelephone, HouseAddress, Height, Weight, 
+    ClassID, ClassDuty, Ethno, PoliticalStatus, LiteracyLevels, GraduationTime, GraduationNum, 
+    ExamineeId, CredentialsPhoto, LivePhoto, IDcardPhoto
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.StudentinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from studentinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where StudentId = #{studentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from studentinfo
+    where StudentId = #{studentId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.StudentinfoExample" >
+    delete from studentinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Studentinfo" >
+    insert into studentinfo (StudentId, StudentIDcard, StudentName, 
+      FormerName, StudentGender, CurrentState, 
+      Birthdate, AdmissionDate, MaritalStatus, 
+      NativePlace, SchoolYearType, SchoolLevel, 
+      EntranceScores, NCEERegistrationId, OriginOfStudent, 
+      HomeTelephone, HouseAddress, Height, 
+      Weight, ClassID, ClassDuty, 
+      Ethno, PoliticalStatus, LiteracyLevels, 
+      GraduationTime, GraduationNum, ExamineeId, 
+      CredentialsPhoto, LivePhoto, IDcardPhoto
+      )
+    values (#{studentId,jdbcType=VARCHAR}, #{studentIDcard,jdbcType=CHAR}, #{studentName,jdbcType=VARCHAR}, 
+      #{formerName,jdbcType=VARCHAR}, #{studentGender,jdbcType=TINYINT}, #{currentState,jdbcType=TINYINT}, 
+      #{birthdate,jdbcType=DATE}, #{admissionDate,jdbcType=DATE}, #{maritalStatus,jdbcType=TINYINT}, 
+      #{nativePlace,jdbcType=VARCHAR}, #{schoolYearType,jdbcType=TINYINT}, #{schoolLevel,jdbcType=TINYINT}, 
+      #{entranceScores,jdbcType=REAL}, #{NCEERegistrationId,jdbcType=VARCHAR}, #{originOfStudent,jdbcType=VARCHAR}, 
+      #{homeTelephone,jdbcType=VARCHAR}, #{houseAddress,jdbcType=VARCHAR}, #{height,jdbcType=SMALLINT}, 
+      #{weight,jdbcType=SMALLINT}, #{classID,jdbcType=VARCHAR}, #{classDuty,jdbcType=VARCHAR}, 
+      #{ethno,jdbcType=VARCHAR}, #{politicalStatus,jdbcType=VARCHAR}, #{literacyLevels,jdbcType=VARCHAR}, 
+      #{graduationTime,jdbcType=DATE}, #{graduationNum,jdbcType=VARCHAR}, #{examineeId,jdbcType=VARCHAR}, 
+      #{credentialsPhoto,jdbcType=VARCHAR}, #{livePhoto,jdbcType=VARCHAR}, #{IDcardPhoto,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Studentinfo" >
+    insert into studentinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        StudentId,
+      </if>
+      <if test="studentIDcard != null" >
+        StudentIDcard,
+      </if>
+      <if test="studentName != null" >
+        StudentName,
+      </if>
+      <if test="formerName != null" >
+        FormerName,
+      </if>
+      <if test="studentGender != null" >
+        StudentGender,
+      </if>
+      <if test="currentState != null" >
+        CurrentState,
+      </if>
+      <if test="birthdate != null" >
+        Birthdate,
+      </if>
+      <if test="admissionDate != null" >
+        AdmissionDate,
+      </if>
+      <if test="maritalStatus != null" >
+        MaritalStatus,
+      </if>
+      <if test="nativePlace != null" >
+        NativePlace,
+      </if>
+      <if test="schoolYearType != null" >
+        SchoolYearType,
+      </if>
+      <if test="schoolLevel != null" >
+        SchoolLevel,
+      </if>
+      <if test="entranceScores != null" >
+        EntranceScores,
+      </if>
+      <if test="NCEERegistrationId != null" >
+        NCEERegistrationId,
+      </if>
+      <if test="originOfStudent != null" >
+        OriginOfStudent,
+      </if>
+      <if test="homeTelephone != null" >
+        HomeTelephone,
+      </if>
+      <if test="houseAddress != null" >
+        HouseAddress,
+      </if>
+      <if test="height != null" >
+        Height,
+      </if>
+      <if test="weight != null" >
+        Weight,
+      </if>
+      <if test="classID != null" >
+        ClassID,
+      </if>
+      <if test="classDuty != null" >
+        ClassDuty,
+      </if>
+      <if test="ethno != null" >
+        Ethno,
+      </if>
+      <if test="politicalStatus != null" >
+        PoliticalStatus,
+      </if>
+      <if test="literacyLevels != null" >
+        LiteracyLevels,
+      </if>
+      <if test="graduationTime != null" >
+        GraduationTime,
+      </if>
+      <if test="graduationNum != null" >
+        GraduationNum,
+      </if>
+      <if test="examineeId != null" >
+        ExamineeId,
+      </if>
+      <if test="credentialsPhoto != null" >
+        CredentialsPhoto,
+      </if>
+      <if test="livePhoto != null" >
+        LivePhoto,
+      </if>
+      <if test="IDcardPhoto != null" >
+        IDcardPhoto,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="studentIDcard != null" >
+        #{studentIDcard,jdbcType=CHAR},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="formerName != null" >
+        #{formerName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentGender != null" >
+        #{studentGender,jdbcType=TINYINT},
+      </if>
+      <if test="currentState != null" >
+        #{currentState,jdbcType=TINYINT},
+      </if>
+      <if test="birthdate != null" >
+        #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="admissionDate != null" >
+        #{admissionDate,jdbcType=DATE},
+      </if>
+      <if test="maritalStatus != null" >
+        #{maritalStatus,jdbcType=TINYINT},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYearType != null" >
+        #{schoolYearType,jdbcType=TINYINT},
+      </if>
+      <if test="schoolLevel != null" >
+        #{schoolLevel,jdbcType=TINYINT},
+      </if>
+      <if test="entranceScores != null" >
+        #{entranceScores,jdbcType=REAL},
+      </if>
+      <if test="NCEERegistrationId != null" >
+        #{NCEERegistrationId,jdbcType=VARCHAR},
+      </if>
+      <if test="originOfStudent != null" >
+        #{originOfStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="homeTelephone != null" >
+        #{homeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="houseAddress != null" >
+        #{houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        #{height,jdbcType=SMALLINT},
+      </if>
+      <if test="weight != null" >
+        #{weight,jdbcType=SMALLINT},
+      </if>
+      <if test="classID != null" >
+        #{classID,jdbcType=VARCHAR},
+      </if>
+      <if test="classDuty != null" >
+        #{classDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="ethno != null" >
+        #{ethno,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="literacyLevels != null" >
+        #{literacyLevels,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null" >
+        #{graduationTime,jdbcType=DATE},
+      </if>
+      <if test="graduationNum != null" >
+        #{graduationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="examineeId != null" >
+        #{examineeId,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsPhoto != null" >
+        #{credentialsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="livePhoto != null" >
+        #{livePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="IDcardPhoto != null" >
+        #{IDcardPhoto,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.StudentinfoExample" resultType="java.lang.Integer" >
+    select count(*) from studentinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update studentinfo
+    <set >
+      <if test="record.studentId != null" >
+        StudentId = #{record.studentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentIDcard != null" >
+        StudentIDcard = #{record.studentIDcard,jdbcType=CHAR},
+      </if>
+      <if test="record.studentName != null" >
+        StudentName = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formerName != null" >
+        FormerName = #{record.formerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentGender != null" >
+        StudentGender = #{record.studentGender,jdbcType=TINYINT},
+      </if>
+      <if test="record.currentState != null" >
+        CurrentState = #{record.currentState,jdbcType=TINYINT},
+      </if>
+      <if test="record.birthdate != null" >
+        Birthdate = #{record.birthdate,jdbcType=DATE},
+      </if>
+      <if test="record.admissionDate != null" >
+        AdmissionDate = #{record.admissionDate,jdbcType=DATE},
+      </if>
+      <if test="record.maritalStatus != null" >
+        MaritalStatus = #{record.maritalStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.nativePlace != null" >
+        NativePlace = #{record.nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolYearType != null" >
+        SchoolYearType = #{record.schoolYearType,jdbcType=TINYINT},
+      </if>
+      <if test="record.schoolLevel != null" >
+        SchoolLevel = #{record.schoolLevel,jdbcType=TINYINT},
+      </if>
+      <if test="record.entranceScores != null" >
+        EntranceScores = #{record.entranceScores,jdbcType=REAL},
+      </if>
+      <if test="record.NCEERegistrationId != null" >
+        NCEERegistrationId = #{record.NCEERegistrationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originOfStudent != null" >
+        OriginOfStudent = #{record.originOfStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homeTelephone != null" >
+        HomeTelephone = #{record.homeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.houseAddress != null" >
+        HouseAddress = #{record.houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.height != null" >
+        Height = #{record.height,jdbcType=SMALLINT},
+      </if>
+      <if test="record.weight != null" >
+        Weight = #{record.weight,jdbcType=SMALLINT},
+      </if>
+      <if test="record.classID != null" >
+        ClassID = #{record.classID,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classDuty != null" >
+        ClassDuty = #{record.classDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ethno != null" >
+        Ethno = #{record.ethno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.politicalStatus != null" >
+        PoliticalStatus = #{record.politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.literacyLevels != null" >
+        LiteracyLevels = #{record.literacyLevels,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationTime != null" >
+        GraduationTime = #{record.graduationTime,jdbcType=DATE},
+      </if>
+      <if test="record.graduationNum != null" >
+        GraduationNum = #{record.graduationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examineeId != null" >
+        ExamineeId = #{record.examineeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.credentialsPhoto != null" >
+        CredentialsPhoto = #{record.credentialsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.livePhoto != null" >
+        LivePhoto = #{record.livePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="record.IDcardPhoto != null" >
+        IDcardPhoto = #{record.IDcardPhoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update studentinfo
+    set StudentId = #{record.studentId,jdbcType=VARCHAR},
+      StudentIDcard = #{record.studentIDcard,jdbcType=CHAR},
+      StudentName = #{record.studentName,jdbcType=VARCHAR},
+      FormerName = #{record.formerName,jdbcType=VARCHAR},
+      StudentGender = #{record.studentGender,jdbcType=TINYINT},
+      CurrentState = #{record.currentState,jdbcType=TINYINT},
+      Birthdate = #{record.birthdate,jdbcType=DATE},
+      AdmissionDate = #{record.admissionDate,jdbcType=DATE},
+      MaritalStatus = #{record.maritalStatus,jdbcType=TINYINT},
+      NativePlace = #{record.nativePlace,jdbcType=VARCHAR},
+      SchoolYearType = #{record.schoolYearType,jdbcType=TINYINT},
+      SchoolLevel = #{record.schoolLevel,jdbcType=TINYINT},
+      EntranceScores = #{record.entranceScores,jdbcType=REAL},
+      NCEERegistrationId = #{record.NCEERegistrationId,jdbcType=VARCHAR},
+      OriginOfStudent = #{record.originOfStudent,jdbcType=VARCHAR},
+      HomeTelephone = #{record.homeTelephone,jdbcType=VARCHAR},
+      HouseAddress = #{record.houseAddress,jdbcType=VARCHAR},
+      Height = #{record.height,jdbcType=SMALLINT},
+      Weight = #{record.weight,jdbcType=SMALLINT},
+      ClassID = #{record.classID,jdbcType=VARCHAR},
+      ClassDuty = #{record.classDuty,jdbcType=VARCHAR},
+      Ethno = #{record.ethno,jdbcType=VARCHAR},
+      PoliticalStatus = #{record.politicalStatus,jdbcType=VARCHAR},
+      LiteracyLevels = #{record.literacyLevels,jdbcType=VARCHAR},
+      GraduationTime = #{record.graduationTime,jdbcType=DATE},
+      GraduationNum = #{record.graduationNum,jdbcType=VARCHAR},
+      ExamineeId = #{record.examineeId,jdbcType=VARCHAR},
+      CredentialsPhoto = #{record.credentialsPhoto,jdbcType=VARCHAR},
+      LivePhoto = #{record.livePhoto,jdbcType=VARCHAR},
+      IDcardPhoto = #{record.IDcardPhoto,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Studentinfo" >
+    update studentinfo
+    <set >
+      <if test="studentIDcard != null" >
+        StudentIDcard = #{studentIDcard,jdbcType=CHAR},
+      </if>
+      <if test="studentName != null" >
+        StudentName = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="formerName != null" >
+        FormerName = #{formerName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentGender != null" >
+        StudentGender = #{studentGender,jdbcType=TINYINT},
+      </if>
+      <if test="currentState != null" >
+        CurrentState = #{currentState,jdbcType=TINYINT},
+      </if>
+      <if test="birthdate != null" >
+        Birthdate = #{birthdate,jdbcType=DATE},
+      </if>
+      <if test="admissionDate != null" >
+        AdmissionDate = #{admissionDate,jdbcType=DATE},
+      </if>
+      <if test="maritalStatus != null" >
+        MaritalStatus = #{maritalStatus,jdbcType=TINYINT},
+      </if>
+      <if test="nativePlace != null" >
+        NativePlace = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolYearType != null" >
+        SchoolYearType = #{schoolYearType,jdbcType=TINYINT},
+      </if>
+      <if test="schoolLevel != null" >
+        SchoolLevel = #{schoolLevel,jdbcType=TINYINT},
+      </if>
+      <if test="entranceScores != null" >
+        EntranceScores = #{entranceScores,jdbcType=REAL},
+      </if>
+      <if test="NCEERegistrationId != null" >
+        NCEERegistrationId = #{NCEERegistrationId,jdbcType=VARCHAR},
+      </if>
+      <if test="originOfStudent != null" >
+        OriginOfStudent = #{originOfStudent,jdbcType=VARCHAR},
+      </if>
+      <if test="homeTelephone != null" >
+        HomeTelephone = #{homeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="houseAddress != null" >
+        HouseAddress = #{houseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="height != null" >
+        Height = #{height,jdbcType=SMALLINT},
+      </if>
+      <if test="weight != null" >
+        Weight = #{weight,jdbcType=SMALLINT},
+      </if>
+      <if test="classID != null" >
+        ClassID = #{classID,jdbcType=VARCHAR},
+      </if>
+      <if test="classDuty != null" >
+        ClassDuty = #{classDuty,jdbcType=VARCHAR},
+      </if>
+      <if test="ethno != null" >
+        Ethno = #{ethno,jdbcType=VARCHAR},
+      </if>
+      <if test="politicalStatus != null" >
+        PoliticalStatus = #{politicalStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="literacyLevels != null" >
+        LiteracyLevels = #{literacyLevels,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationTime != null" >
+        GraduationTime = #{graduationTime,jdbcType=DATE},
+      </if>
+      <if test="graduationNum != null" >
+        GraduationNum = #{graduationNum,jdbcType=VARCHAR},
+      </if>
+      <if test="examineeId != null" >
+        ExamineeId = #{examineeId,jdbcType=VARCHAR},
+      </if>
+      <if test="credentialsPhoto != null" >
+        CredentialsPhoto = #{credentialsPhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="livePhoto != null" >
+        LivePhoto = #{livePhoto,jdbcType=VARCHAR},
+      </if>
+      <if test="IDcardPhoto != null" >
+        IDcardPhoto = #{IDcardPhoto,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where StudentId = #{studentId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Studentinfo" >
+    update studentinfo
+    set StudentIDcard = #{studentIDcard,jdbcType=CHAR},
+      StudentName = #{studentName,jdbcType=VARCHAR},
+      FormerName = #{formerName,jdbcType=VARCHAR},
+      StudentGender = #{studentGender,jdbcType=TINYINT},
+      CurrentState = #{currentState,jdbcType=TINYINT},
+      Birthdate = #{birthdate,jdbcType=DATE},
+      AdmissionDate = #{admissionDate,jdbcType=DATE},
+      MaritalStatus = #{maritalStatus,jdbcType=TINYINT},
+      NativePlace = #{nativePlace,jdbcType=VARCHAR},
+      SchoolYearType = #{schoolYearType,jdbcType=TINYINT},
+      SchoolLevel = #{schoolLevel,jdbcType=TINYINT},
+      EntranceScores = #{entranceScores,jdbcType=REAL},
+      NCEERegistrationId = #{NCEERegistrationId,jdbcType=VARCHAR},
+      OriginOfStudent = #{originOfStudent,jdbcType=VARCHAR},
+      HomeTelephone = #{homeTelephone,jdbcType=VARCHAR},
+      HouseAddress = #{houseAddress,jdbcType=VARCHAR},
+      Height = #{height,jdbcType=SMALLINT},
+      Weight = #{weight,jdbcType=SMALLINT},
+      ClassID = #{classID,jdbcType=VARCHAR},
+      ClassDuty = #{classDuty,jdbcType=VARCHAR},
+      Ethno = #{ethno,jdbcType=VARCHAR},
+      PoliticalStatus = #{politicalStatus,jdbcType=VARCHAR},
+      LiteracyLevels = #{literacyLevels,jdbcType=VARCHAR},
+      GraduationTime = #{graduationTime,jdbcType=DATE},
+      GraduationNum = #{graduationNum,jdbcType=VARCHAR},
+      ExamineeId = #{examineeId,jdbcType=VARCHAR},
+      CredentialsPhoto = #{credentialsPhoto,jdbcType=VARCHAR},
+      LivePhoto = #{livePhoto,jdbcType=VARCHAR},
+      IDcardPhoto = #{IDcardPhoto,jdbcType=VARCHAR}
+    where StudentId = #{studentId,jdbcType=VARCHAR}
+  </update>
+</mapper>

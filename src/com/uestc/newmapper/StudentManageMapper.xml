@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.StudentManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Studentinfo" >
+    <id column="StudentId" property="studentId" jdbcType="VARCHAR" />
+    <result column="StudentIDcard" property="studentIDcard" jdbcType="CHAR" />
+    <result column="StudentName" property="studentName" jdbcType="VARCHAR" />
+    <result column="FormerName" property="formerName" jdbcType="VARCHAR" />
+    <result column="StudentGender" property="studentGender" jdbcType="TINYINT" />
+    <result column="CurrentState" property="currentState" jdbcType="TINYINT" />
+    <result column="Birthdate" property="birthdate" jdbcType="DATE" />
+    <result column="AdmissionDate" property="admissionDate" jdbcType="DATE" />
+    <result column="MaritalStatus" property="maritalStatus" jdbcType="TINYINT" />
+    <result column="NativePlace" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="SchoolYearType" property="schoolYearType" jdbcType="TINYINT" />
+    <result column="SchoolLevel" property="schoolLevel" jdbcType="TINYINT" />
+    <result column="EntranceScores" property="entranceScores" jdbcType="REAL" />
+    <result column="NCEERegistrationId" property="NCEERegistrationId" jdbcType="VARCHAR" />
+    <result column="OriginOfStudent" property="originOfStudent" jdbcType="VARCHAR" />
+    <result column="HomeTelephone" property="homeTelephone" jdbcType="VARCHAR" />
+    <result column="HouseAddress" property="houseAddress" jdbcType="VARCHAR" />
+    <result column="Height" property="height" jdbcType="SMALLINT" />
+    <result column="Weight" property="weight" jdbcType="SMALLINT" />
+    <result column="ClassID" property="classID" jdbcType="VARCHAR" />
+    <result column="ClassDuty" property="classDuty" jdbcType="VARCHAR" />
+    <result column="ClassCategory" property="classCategory" jdbcType="TINYINT" />
+    <result column="Ethno" property="ethno" jdbcType="VARCHAR" />
+    <result column="PoliticalStatus" property="politicalStatus" jdbcType="VARCHAR" />
+    <result column="LiteracyLevels" property="literacyLevels" jdbcType="VARCHAR" />
+    <result column="GraduationTime" property="graduationTime" jdbcType="DATE" />
+    <result column="GraduationNum" property="graduationNum" jdbcType="VARCHAR" />
+    <result column="ExamineeId" property="examineeId" jdbcType="VARCHAR" />
+    <result column="CredentialsPhoto" property="credentialsPhoto" jdbcType="VARCHAR" />
+    <result column="LivePhoto" property="livePhoto" jdbcType="VARCHAR" />
+    <result column="IDcardPhoto" property="IDcardPhoto" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    StudentId, StudentIDcard, StudentName, FormerName, StudentGender, CurrentState, Birthdate, 
+    AdmissionDate, MaritalStatus, NativePlace, SchoolYearType, SchoolLevel, EntranceScores, 
+    NCEERegistrationId, OriginOfStudent, HomeTelephone, HouseAddress, Height, Weight, 
+    ClassID, ClassDuty, ClassCategory, Ethno, PoliticalStatus, LiteracyLevels, GraduationTime, 
+    GraduationNum, ExamineeId, CredentialsPhoto, LivePhoto, IDcardPhoto
+  </sql>
+  
+  
+  <select id="selectBySchoolYearType" resultMap="BaseResultMap" parameterType="java.lang.Byte" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where SchoolYearType = #{schoolYearType,jdbcType=TINYINT}
+  </select>
+  <select id="selectByGradeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where GradeId = #{gradeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByStudentId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where StudentId = #{studentId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByKey" resultMap="BaseResultMap" parameterType="com.uestc.newmodel.StudentinfoKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from studentinfo
+    where 
+    <trim   suffixOverrides="and">
+    	SchoolYearType = #{schoolYearType,jdbcType=TINYINT} and
+    	<!-- <if test="gradeId != null" > GradeId = #{gradeId,jdbcType=VARCHAR} and </if> -->
+    	<if test="classId != null" > ClassId = #{classId,jdbcType=VARCHAR} and </if>
+    	<if test="studentId != null" > StudentId = #{studentId,jdbcType=VARCHAR} and</if>	
+    </trim>
+  </select>
+  <select id="countStudentNumBygradeId" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(*)
+    from studentinfo
+    where GradeId = #{gradeId,jdbcType=VARCHAR}
+  </select>
+  <select id="countStudentNumByClassId" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(*)
+    from studentinfo
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.CourseassociationMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Courseassociation" >
+    <id column="CourseAssociationId" property="courseAssociationId" jdbcType="VARCHAR" />
+    <result column="ClassId" property="classId" jdbcType="VARCHAR" />
+    <result column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="CoursePlanId" property="coursePlanId" jdbcType="VARCHAR" />
+    <result column="AssociationExec" property="associationExec" jdbcType="TINYINT" />
+    <result column="CanModifyGrade" property="canModifyGrade" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CourseAssociationId, ClassId, TeacherId, CoursePlanId, AssociationExec, CanModifyGrade
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.CourseassociationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from courseassociation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from courseassociation
+    where CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from courseassociation
+    where CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.CourseassociationExample" >
+    delete from courseassociation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Courseassociation" >
+    insert into courseassociation (CourseAssociationId, ClassId, TeacherId, 
+      CoursePlanId, AssociationExec, CanModifyGrade
+      )
+    values (#{courseAssociationId,jdbcType=VARCHAR}, #{classId,jdbcType=VARCHAR}, #{teacherId,jdbcType=CHAR}, 
+      #{coursePlanId,jdbcType=VARCHAR}, #{associationExec,jdbcType=TINYINT}, #{canModifyGrade,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Courseassociation" >
+    insert into courseassociation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="courseAssociationId != null" >
+        CourseAssociationId,
+      </if>
+      <if test="classId != null" >
+        ClassId,
+      </if>
+      <if test="teacherId != null" >
+        TeacherId,
+      </if>
+      <if test="coursePlanId != null" >
+        CoursePlanId,
+      </if>
+      <if test="associationExec != null" >
+        AssociationExec,
+      </if>
+      <if test="canModifyGrade != null" >
+        CanModifyGrade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="courseAssociationId != null" >
+        #{courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="classId != null" >
+        #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="coursePlanId != null" >
+        #{coursePlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="associationExec != null" >
+        #{associationExec,jdbcType=TINYINT},
+      </if>
+      <if test="canModifyGrade != null" >
+        #{canModifyGrade,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.CourseassociationExample" resultType="java.lang.Integer" >
+    select count(*) from courseassociation
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update courseassociation
+    <set >
+      <if test="record.courseAssociationId != null" >
+        CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classId != null" >
+        ClassId = #{record.classId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherId != null" >
+        TeacherId = #{record.teacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.coursePlanId != null" >
+        CoursePlanId = #{record.coursePlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.associationExec != null" >
+        AssociationExec = #{record.associationExec,jdbcType=TINYINT},
+      </if>
+      <if test="record.canModifyGrade != null" >
+        CanModifyGrade = #{record.canModifyGrade,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update courseassociation
+    set CourseAssociationId = #{record.courseAssociationId,jdbcType=VARCHAR},
+      ClassId = #{record.classId,jdbcType=VARCHAR},
+      TeacherId = #{record.teacherId,jdbcType=CHAR},
+      CoursePlanId = #{record.coursePlanId,jdbcType=VARCHAR},
+      AssociationExec = #{record.associationExec,jdbcType=TINYINT},
+      CanModifyGrade = #{record.canModifyGrade,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Courseassociation" >
+    update courseassociation
+    <set >
+      <if test="classId != null" >
+        ClassId = #{classId,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null" >
+        TeacherId = #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="coursePlanId != null" >
+        CoursePlanId = #{coursePlanId,jdbcType=VARCHAR},
+      </if>
+      <if test="associationExec != null" >
+        AssociationExec = #{associationExec,jdbcType=TINYINT},
+      </if>
+      <if test="canModifyGrade != null" >
+        CanModifyGrade = #{canModifyGrade,jdbcType=BIT},
+      </if>
+    </set>
+    where CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Courseassociation" >
+    update courseassociation
+    set ClassId = #{classId,jdbcType=VARCHAR},
+      TeacherId = #{teacherId,jdbcType=CHAR},
+      CoursePlanId = #{coursePlanId,jdbcType=VARCHAR},
+      AssociationExec = #{associationExec,jdbcType=TINYINT},
+      CanModifyGrade = #{canModifyGrade,jdbcType=BIT}
+    where CourseAssociationId = #{courseAssociationId,jdbcType=VARCHAR}
+  </update>
+</mapper>

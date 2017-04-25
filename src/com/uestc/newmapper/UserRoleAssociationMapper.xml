@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.uestc.newmapper.UserRoleAssociationMapper" >
+  
+  <resultMap id="UserinfoMap" type="com.uestc.model.Userinfo" >
+    <id column="UserId" property="userId" jdbcType="VARCHAR" />
+    <result column="UserName" property="userName" jdbcType="VARCHAR" />
+    <result column="UserPwd" property="userPwd" jdbcType="CHAR" />
+    <result column="UserType" property="userType" jdbcType="TINYINT" />
+    <result column="PhoneNumber" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="EmailAddress" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="ValidataCode" property="validataCode" jdbcType="VARCHAR" />
+    <result column="OutDate" property="outDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <resultMap id="UserroleKeyMap" type="com.uestc.model.UserroleKey" >
+    <id column="UserId" property="userId" jdbcType="VARCHAR" />
+    <id column="RoleId" property="roleId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="RoleinfoMap" type="com.uestc.model.Roleinfo" >
+    <id column="RoleId" property="roleId" jdbcType="INTEGER" />
+    <result column="RoleName" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="UserRoleMap" type="com.uestc.newmodel.Userrole" >
+    <id column="UserId" property="userId" jdbcType="VARCHAR" />
+    <id column="UserName" property="userName" jdbcType="VARCHAR" /> 
+    <id column="RoleId" property="roleId" jdbcType="INTEGER" />
+    <id column="RoleName" property="roleName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Userinfo_List" >
+    UserId, UserName, UserPwd, UserType, PhoneNumber, EmailAddress, ValidataCode, OutDate
+  </sql>
+   
+  <sql id="UserroleKey_List" >
+    UserId, RoleId
+  </sql>
+  
+  <sql id="Roleinfo_List" >
+    RoleId, RoleName
+  </sql>
+  
+  <select id="selectAllUser" resultMap="UserinfoMap"  >
+    select 
+    <include refid="Userinfo_List" />
+    from userinfo
+  </select>
+  
+  <select id="selectAllUserByIdOrName" resultMap="UserinfoMap" parameterType="String" >
+
+    select 
+    UserId, UserName
+    from userinfo where UserId like  CONCAT(CONCAT('%',#{userIdOrName,jdbcType=VARCHAR}),'%')
+    or UserName like CONCAT(CONCAT('%',#{userIdOrName,jdbcType=VARCHAR}),'%')
+  </select>
+  
+   <insert id="insertByExcel"  parameterType="ArrayList">  
+      insert into userinfo (UserId, UserName, UserPwd, 
+      UserType, PhoneNumber, EmailAddress, ValidataCode) 
+      values
+      <foreach collection="list" item="item" index="index" separator="," >
+        (
+        #{item.userId,jdbcType=VARCHAR}, #{item.userName,jdbcType=VARCHAR}, #{item.userPwd,jdbcType=CHAR}, #{item.userType,jdbcType=TINYINT}
+        , #{item.phoneNumber,jdbcType=VARCHAR}, #{item.emailAddress,jdbcType=VARCHAR}, #{item.validataCode,jdbcType=VARCHAR} 
+        )   
+    </foreach> 
+  </insert>  
+  
+  <select id="selectByPrimaryKey" resultMap="UserinfoMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Userinfo_List" />
+    from userinfo
+    where UserId = #{userId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectRoleByUserId" resultMap="UserRoleMap" parameterType="String" >
+  
+    select ur.UserId,u.UserName,ur.RoleId,r.RoleName
+ 	from userrole ur 
+	LEFT JOIN roleinfo r on ur.RoleId = r.RoleId
+	left join userinfo u on ur.UserId = u.UserId 
+	where ur.UserId = #{userId,jdbcType=VARCHAR}
+	
+  </select>
+  
+  <select id="selectUserByRoleId" resultMap="UserRoleMap" parameterType="java.lang.Integer" >
+  
+    select ur.UserId,u.UserName,ur.RoleId,r.RoleName
+ 	from userrole ur 
+	LEFT JOIN roleinfo r on ur.RoleId = r.RoleId
+	left join userinfo u on ur.UserId = u.UserId 
+	where ur.RoleId = #{roleId,jdbcType=INTEGER}
+	
+  </select>
+  
+  <delete id="deleteRoleByUserId" parameterType="String" >
+    delete from userrole
+    where UserId = #{userId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insertUserroleByChoose"  parameterType="ArrayList">  
+      insert into userrole (UserId, RoleId) 
+      values
+      <foreach collection="list" item="item" index="index" separator="," >
+        (
+        #{item.userId,jdbcType=VARCHAR}, #{item.roleId,jdbcType=INTEGER}
+        )   
+    </foreach> 
+  </insert>  
+  
+
+  
+  <insert id="insertByRoleId" parameterType="com.uestc.model.Roleinfo" >
+    insert into roleinfo (RoleId, RoleName)
+    values (#{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertUndefinedRole" parameterType="java.lang.String" >
+  
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">  
+            SELECT LAST_INSERT_ID()   
+    </selectKey>  
+    insert into roleinfo  RoleName
+    values #{roleName,jdbcType=VARCHAR}
+  </insert>
+  
+  <select id="selectAllRole" resultMap="RoleinfoMap"  >
+    select 
+    <include refid="Roleinfo_List" />
+    from roleinfo
+  </select>
+
+  
+</mapper>

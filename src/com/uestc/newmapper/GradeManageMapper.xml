@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.GradeManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Gradeinfo" >
+    <id column="GradeId" property="gradeId" jdbcType="VARCHAR" />
+    <result column="GradeType" property="gradeType" jdbcType="TINYINT" />
+  </resultMap>
+  
+ 
+  <sql id="Base_Column_List" >
+    GradeId, GradeType
+  </sql>
+  <select id="selectAllGradeId" resultType="java.lang.String">
+  	select gradeId
+  	from gradeinfo
+  </select>
+  
+  <select id="selectThreeGradeinfo" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from gradeinfo
+    where GradeType = 3
+  </select>
+  <select id="selectFiveGradeinfo" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from gradeinfo
+    where GradeType = 5
+  </select>
+  
+</mapper>

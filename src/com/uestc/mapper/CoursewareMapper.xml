@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.CoursewareMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Courseware" >
+    <id column="CoursewareId" property="coursewareId" jdbcType="INTEGER" />
+    <result column="TeacherId" property="teacherId" jdbcType="CHAR" />
+    <result column="CourseId" property="courseId" jdbcType="CHAR" />
+    <result column="CoursewareUri" property="coursewareUri" jdbcType="VARCHAR" />
+    <result column="CoursewareUptime" property="coursewareUptime" jdbcType="TIMESTAMP" />
+    <result column="CoursewareType" property="coursewareType" jdbcType="TINYINT" />
+    <result column="TARAudit" property="TARAudit" jdbcType="TINYINT" />
+    <result column="EDUAudit" property="EDUAudit" jdbcType="TINYINT" />
+    <result column="AuditTime" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="AuditorsTARId" property="auditorsTARId" jdbcType="CHAR" />
+    <result column="AuditorsEDUId" property="auditorsEDUId" jdbcType="VARCHAR" />
+    <result column="AuditRecord" property="auditRecord" jdbcType="REAL" />
+    <result column="UpSchoolTerm" property="upSchoolTerm" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    CoursewareId, TeacherId, CourseId, CoursewareUri, CoursewareUptime, CoursewareType, 
+    TARAudit, EDUAudit, AuditTime, AuditorsTARId, AuditorsEDUId, AuditRecord, UpSchoolTerm
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.CoursewareExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from courseware
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from courseware
+    where CoursewareId = #{coursewareId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from courseware
+    where CoursewareId = #{coursewareId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.uestc.model.CoursewareExample" >
+    delete from courseware
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Courseware" >
+    insert into courseware (CoursewareId, TeacherId, CourseId, 
+      CoursewareUri, CoursewareUptime, CoursewareType, 
+      TARAudit, EDUAudit, AuditTime, 
+      AuditorsTARId, AuditorsEDUId, AuditRecord, 
+      UpSchoolTerm)
+    values (#{coursewareId,jdbcType=INTEGER}, #{teacherId,jdbcType=CHAR}, #{courseId,jdbcType=CHAR}, 
+      #{coursewareUri,jdbcType=VARCHAR}, #{coursewareUptime,jdbcType=TIMESTAMP}, #{coursewareType,jdbcType=TINYINT}, 
+      #{TARAudit,jdbcType=TINYINT}, #{EDUAudit,jdbcType=TINYINT}, #{auditTime,jdbcType=TIMESTAMP}, 
+      #{auditorsTARId,jdbcType=CHAR}, #{auditorsEDUId,jdbcType=VARCHAR}, #{auditRecord,jdbcType=REAL}, 
+      #{upSchoolTerm,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Courseware" >
+    insert into courseware
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="coursewareId != null" >
+        CoursewareId,
+      </if>
+      <if test="teacherId != null" >
+        TeacherId,
+      </if>
+      <if test="courseId != null" >
+        CourseId,
+      </if>
+      <if test="coursewareUri != null" >
+        CoursewareUri,
+      </if>
+      <if test="coursewareUptime != null" >
+        CoursewareUptime,
+      </if>
+      <if test="coursewareType != null" >
+        CoursewareType,
+      </if>
+      <if test="TARAudit != null" >
+        TARAudit,
+      </if>
+      <if test="EDUAudit != null" >
+        EDUAudit,
+      </if>
+      <if test="auditTime != null" >
+        AuditTime,
+      </if>
+      <if test="auditorsTARId != null" >
+        AuditorsTARId,
+      </if>
+      <if test="auditorsEDUId != null" >
+        AuditorsEDUId,
+      </if>
+      <if test="auditRecord != null" >
+        AuditRecord,
+      </if>
+      <if test="upSchoolTerm != null" >
+        UpSchoolTerm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="coursewareId != null" >
+        #{coursewareId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="courseId != null" >
+        #{courseId,jdbcType=CHAR},
+      </if>
+      <if test="coursewareUri != null" >
+        #{coursewareUri,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareUptime != null" >
+        #{coursewareUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursewareType != null" >
+        #{coursewareType,jdbcType=TINYINT},
+      </if>
+      <if test="TARAudit != null" >
+        #{TARAudit,jdbcType=TINYINT},
+      </if>
+      <if test="EDUAudit != null" >
+        #{EDUAudit,jdbcType=TINYINT},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditorsTARId != null" >
+        #{auditorsTARId,jdbcType=CHAR},
+      </if>
+      <if test="auditorsEDUId != null" >
+        #{auditorsEDUId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRecord != null" >
+        #{auditRecord,jdbcType=REAL},
+      </if>
+      <if test="upSchoolTerm != null" >
+        #{upSchoolTerm,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.CoursewareExample" resultType="java.lang.Integer" >
+    select count(*) from courseware
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update courseware
+    <set >
+      <if test="record.coursewareId != null" >
+        CoursewareId = #{record.coursewareId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        TeacherId = #{record.teacherId,jdbcType=CHAR},
+      </if>
+      <if test="record.courseId != null" >
+        CourseId = #{record.courseId,jdbcType=CHAR},
+      </if>
+      <if test="record.coursewareUri != null" >
+        CoursewareUri = #{record.coursewareUri,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coursewareUptime != null" >
+        CoursewareUptime = #{record.coursewareUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.coursewareType != null" >
+        CoursewareType = #{record.coursewareType,jdbcType=TINYINT},
+      </if>
+      <if test="record.TARAudit != null" >
+        TARAudit = #{record.TARAudit,jdbcType=TINYINT},
+      </if>
+      <if test="record.EDUAudit != null" >
+        EDUAudit = #{record.EDUAudit,jdbcType=TINYINT},
+      </if>
+      <if test="record.auditTime != null" >
+        AuditTime = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.auditorsTARId != null" >
+        AuditorsTARId = #{record.auditorsTARId,jdbcType=CHAR},
+      </if>
+      <if test="record.auditorsEDUId != null" >
+        AuditorsEDUId = #{record.auditorsEDUId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditRecord != null" >
+        AuditRecord = #{record.auditRecord,jdbcType=REAL},
+      </if>
+      <if test="record.upSchoolTerm != null" >
+        UpSchoolTerm = #{record.upSchoolTerm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update courseware
+    set CoursewareId = #{record.coursewareId,jdbcType=INTEGER},
+      TeacherId = #{record.teacherId,jdbcType=CHAR},
+      CourseId = #{record.courseId,jdbcType=CHAR},
+      CoursewareUri = #{record.coursewareUri,jdbcType=VARCHAR},
+      CoursewareUptime = #{record.coursewareUptime,jdbcType=TIMESTAMP},
+      CoursewareType = #{record.coursewareType,jdbcType=TINYINT},
+      TARAudit = #{record.TARAudit,jdbcType=TINYINT},
+      EDUAudit = #{record.EDUAudit,jdbcType=TINYINT},
+      AuditTime = #{record.auditTime,jdbcType=TIMESTAMP},
+      AuditorsTARId = #{record.auditorsTARId,jdbcType=CHAR},
+      AuditorsEDUId = #{record.auditorsEDUId,jdbcType=VARCHAR},
+      AuditRecord = #{record.auditRecord,jdbcType=REAL},
+      UpSchoolTerm = #{record.upSchoolTerm,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.uestc.model.Courseware" >
+    update courseware
+    <set >
+      <if test="teacherId != null" >
+        TeacherId = #{teacherId,jdbcType=CHAR},
+      </if>
+      <if test="courseId != null" >
+        CourseId = #{courseId,jdbcType=CHAR},
+      </if>
+      <if test="coursewareUri != null" >
+        CoursewareUri = #{coursewareUri,jdbcType=VARCHAR},
+      </if>
+      <if test="coursewareUptime != null" >
+        CoursewareUptime = #{coursewareUptime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="coursewareType != null" >
+        CoursewareType = #{coursewareType,jdbcType=TINYINT},
+      </if>
+      <if test="TARAudit != null" >
+        TARAudit = #{TARAudit,jdbcType=TINYINT},
+      </if>
+      <if test="EDUAudit != null" >
+        EDUAudit = #{EDUAudit,jdbcType=TINYINT},
+      </if>
+      <if test="auditTime != null" >
+        AuditTime = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="auditorsTARId != null" >
+        AuditorsTARId = #{auditorsTARId,jdbcType=CHAR},
+      </if>
+      <if test="auditorsEDUId != null" >
+        AuditorsEDUId = #{auditorsEDUId,jdbcType=VARCHAR},
+      </if>
+      <if test="auditRecord != null" >
+        AuditRecord = #{auditRecord,jdbcType=REAL},
+      </if>
+      <if test="upSchoolTerm != null" >
+        UpSchoolTerm = #{upSchoolTerm,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CoursewareId = #{coursewareId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.uestc.model.Courseware" >
+    update courseware
+    set TeacherId = #{teacherId,jdbcType=CHAR},
+      CourseId = #{courseId,jdbcType=CHAR},
+      CoursewareUri = #{coursewareUri,jdbcType=VARCHAR},
+      CoursewareUptime = #{coursewareUptime,jdbcType=TIMESTAMP},
+      CoursewareType = #{coursewareType,jdbcType=TINYINT},
+      TARAudit = #{TARAudit,jdbcType=TINYINT},
+      EDUAudit = #{EDUAudit,jdbcType=TINYINT},
+      AuditTime = #{auditTime,jdbcType=TIMESTAMP},
+      AuditorsTARId = #{auditorsTARId,jdbcType=CHAR},
+      AuditorsEDUId = #{auditorsEDUId,jdbcType=VARCHAR},
+      AuditRecord = #{auditRecord,jdbcType=REAL},
+      UpSchoolTerm = #{upSchoolTerm,jdbcType=VARCHAR}
+    where CoursewareId = #{coursewareId,jdbcType=INTEGER}
+  </update>
+</mapper>

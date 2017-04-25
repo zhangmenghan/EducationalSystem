@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.mapper.SchooltimeMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Schooltime" >
+    <result column="StartYear" property="startYear" jdbcType="VARCHAR" />
+    <result column="StartSemester" property="startSemester" jdbcType="TINYINT" />
+    <result column="StartTime" property="startTime" jdbcType="DATE" />
+    <result column="StartEvaTeachTime" property="startEvaTeachTime" jdbcType="DATE" />
+    <result column="EndEvaTeachTime" property="endEvaTeachTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    StartYear, StartSemester, StartTime, StartEvaTeachTime, EndEvaTeachTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.uestc.model.SchooltimeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from schooltime
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.uestc.model.SchooltimeExample" >
+    delete from schooltime
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.uestc.model.Schooltime" >
+    insert into schooltime (StartYear, StartSemester, StartTime, 
+      StartEvaTeachTime, EndEvaTeachTime)
+    values (#{startYear,jdbcType=VARCHAR}, #{startSemester,jdbcType=TINYINT}, #{startTime,jdbcType=DATE}, 
+      #{startEvaTeachTime,jdbcType=DATE}, #{endEvaTeachTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.uestc.model.Schooltime" >
+    insert into schooltime
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="startYear != null" >
+        StartYear,
+      </if>
+      <if test="startSemester != null" >
+        StartSemester,
+      </if>
+      <if test="startTime != null" >
+        StartTime,
+      </if>
+      <if test="startEvaTeachTime != null" >
+        StartEvaTeachTime,
+      </if>
+      <if test="endEvaTeachTime != null" >
+        EndEvaTeachTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="startYear != null" >
+        #{startYear,jdbcType=VARCHAR},
+      </if>
+      <if test="startSemester != null" >
+        #{startSemester,jdbcType=TINYINT},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=DATE},
+      </if>
+      <if test="startEvaTeachTime != null" >
+        #{startEvaTeachTime,jdbcType=DATE},
+      </if>
+      <if test="endEvaTeachTime != null" >
+        #{endEvaTeachTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.uestc.model.SchooltimeExample" resultType="java.lang.Integer" >
+    select count(*) from schooltime
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update schooltime
+    <set >
+      <if test="record.startYear != null" >
+        StartYear = #{record.startYear,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startSemester != null" >
+        StartSemester = #{record.startSemester,jdbcType=TINYINT},
+      </if>
+      <if test="record.startTime != null" >
+        StartTime = #{record.startTime,jdbcType=DATE},
+      </if>
+      <if test="record.startEvaTeachTime != null" >
+        StartEvaTeachTime = #{record.startEvaTeachTime,jdbcType=DATE},
+      </if>
+      <if test="record.endEvaTeachTime != null" >
+        EndEvaTeachTime = #{record.endEvaTeachTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update schooltime
+    set StartYear = #{record.startYear,jdbcType=VARCHAR},
+      StartSemester = #{record.startSemester,jdbcType=TINYINT},
+      StartTime = #{record.startTime,jdbcType=DATE},
+      StartEvaTeachTime = #{record.startEvaTeachTime,jdbcType=DATE},
+      EndEvaTeachTime = #{record.endEvaTeachTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

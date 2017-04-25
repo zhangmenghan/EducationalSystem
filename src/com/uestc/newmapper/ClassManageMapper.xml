@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.uestc.newmapper.ClassManageMapper" >
+  <resultMap id="BaseResultMap" type="com.uestc.model.Classinfo" >
+    <id column="ClassId" property="classId" jdbcType="VARCHAR" />
+    <result column="SpecialityId" property="specialityId" jdbcType="VARCHAR" />
+    <result column="GradeId" property="gradeId" jdbcType="VARCHAR" />
+    <result column="ClassTeacherId" property="classTeacherId" jdbcType="CHAR" />
+    <result column="StudyMode" property="studyMode" jdbcType="TINYINT" />
+    <result column="ClassName" property="className" jdbcType="VARCHAR" />
+    <result column="ClassSize" property="classSize" jdbcType="TINYINT" />
+  </resultMap>
+  
+  
+  <sql id="Base_Column_List" >
+    ClassId, SpecialityId, GradeId, ClassTeacherId, StudyMode, ClassName, ClassSize
+  </sql>
+  
+  
+  <select id="selectByGradeId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo
+    where GradeId = #{gradeId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByClassId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from classinfo
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </select>
+  <select id="countStudentNumByClassId" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(*)
+    from classinfo
+    where ClassId = #{classId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectClassIdByGradeId" resultType="java.lang.String" parameterType="java.lang.String" >
+    select ClassId
+    from classinfo
+    where GradeId = #{gradeId,jdbcType=VARCHAR}
+  </select>
+</mapper>
