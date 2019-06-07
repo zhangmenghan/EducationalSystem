@@ -1,2 +1,2 @@
-# Nurse
-Nurse System
+# EducationalSystem
+EducationalSystem
